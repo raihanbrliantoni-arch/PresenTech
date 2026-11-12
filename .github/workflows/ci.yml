@@ -46,7 +46,7 @@ jobs:
         run: php artisan test --compact
 
       - name: Check code style
-        run: vendor/bin/pint --test --format=github
+        run: vendor/bin/pint --test
 
   frontend:
     name: Frontend (React + Vite)
