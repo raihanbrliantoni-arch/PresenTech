@@ -1,0 +1,70 @@
+# =====================================================================
+# RAHASIA - jangan pernah di-commit
+# =====================================================================
+.env
+.env.*
+!.env.example
+*.local
+
+# =====================================================================
+# DEPENDENCY & HASIL BUILD
+# =====================================================================
+**/node_modules/
+**/vendor/
+**/dist/
+**/dist-ssr/
+
+# SPA hasil build disajikan Laravel dari sini.
+# Jalankan scripts/build-frontend.ps1 setelah clone.
+PresenTech-Backend/public/app/
+PresenTech-Backend/public/hot
+PresenTech-Backend/public/build
+
+# =====================================================================
+# RUNTIME / CACHE
+# =====================================================================
+PresenTech-Backend/storage/logs/*
+!PresenTech-Backend/storage/logs/.gitignore
+PresenTech-Backend/storage/framework/cache/data/*
+PresenTech-Backend/storage/framework/sessions/*
+PresenTech-Backend/storage/framework/views/*
+PresenTech-Backend/storage/*.key
+**/.phpunit.result.cache
+**/.phpunit.cache/
+*.sqlite
+*.sqlite-journal
+*.log
+
+# =====================================================================
+# OS / EDITOR
+# =====================================================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# =====================================================================
+# TOOLING LOKAL (tidak perlu ikut repo)
+# =====================================================================
+.mcp.json
+opencode.json
+AGENTS.md
+CLAUDE.md
+boost.json
+**/.opencode/
+**/.agents/
+**/.claude/
+
+# =====================================================================
+# SCRATCH / ARTEFAK LOKAL
+# =====================================================================
+# Skrip debug & screenshot kerja frontend (bukan bagian aplikasi).
+PresenTech-frontend/scripts/
+
+# Rekaman/debug lokal yang berisi IP dan path mesin pengembang.
+cdp.mjs
+scripts/capture-alat-output.txt
+
+# Laporan versi lama - simpan hanya docs/laporan-presen-tech.pdf
+docs/laporan-presen-tech-2026-*.pdf

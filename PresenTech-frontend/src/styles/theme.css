@@ -1,0 +1,273 @@
+/* ==================================================
+   PRESENTECH DESIGN TOKENS
+   Palet tenang: biru-kelabu, permukaan sejuk, aksen
+   baja lembut. Warna semantik tetap jelas: hijau,
+   amber, dan merah yang tidak menyilaukan.
+================================================== */
+
+:root {
+  --font-ui: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  --pt-ink: #1f2a3a;
+  --pt-ink-soft: #3a4658;
+  --pt-muted: #5f6f83;
+  --pt-line: #dfe6ee;
+  --pt-line-strong: #c8d3df;
+  --pt-bg: #f1f5f9;
+  --pt-surface: #ffffff;
+  --pt-surface-2: #f8fafc;
+
+  --pt-brand: #355f8a;
+  --pt-brand-dark: #2b4d70;
+  --pt-brand-soft: #e8eff7;
+  --pt-on-brand: #ffffff;
+  --pt-brass: #4f6f8f;
+  --pt-brass-soft: #edf2f7;
+  --pt-amber: #8a5a1c;
+  --pt-amber-soft: #fbf2e2;
+  --pt-danger: #a43d3d;
+  --pt-danger-soft: #faebeb;
+  --pt-on-danger: #ffffff;
+  --pt-success: #2f6b4f;
+  --pt-success-soft: #e7f2eb;
+  --pt-on-success: #ffffff;
+  --pt-info: #3b6d90;
+  --pt-info-soft: #e8f0f7;
+
+  --pt-radius-sm: 8px;
+  --pt-radius-md: 12px;
+  --pt-radius-lg: 18px;
+  --pt-shadow-xs: 0 1px 2px rgba(31, 42, 58, 0.05);
+  --pt-shadow-sm: 0 2px 6px -2px rgba(31, 42, 58, 0.1);
+  --pt-shadow-md: 0 18px 40px -28px rgba(31, 42, 58, 0.32);
+}
+
+body.dark-mode {
+  --pt-ink: #e7edf4;
+  --pt-ink-soft: #c2cedc;
+  --pt-muted: #96a5b8;
+  --pt-line: #293545;
+  --pt-line-strong: #3a485a;
+  --pt-bg: #101720;
+  --pt-surface: #17212e;
+  --pt-surface-2: #121b26;
+
+  --pt-brand: #93b4d6;
+  --pt-brand-dark: #b3cbe4;
+  --pt-brand-soft: rgba(147, 180, 214, 0.14);
+  --pt-on-brand: #14202e;
+  --pt-brass: #aec1d4;
+  --pt-brass-soft: rgba(174, 193, 212, 0.12);
+  --pt-amber: #e2b878;
+  --pt-amber-soft: rgba(226, 184, 120, 0.13);
+  --pt-danger: #e9a09c;
+  --pt-danger-soft: rgba(233, 160, 156, 0.13);
+  --pt-on-danger: #2a1717;
+  --pt-success: #86c3a1;
+  --pt-success-soft: rgba(134, 195, 161, 0.13);
+  --pt-on-success: #12241a;
+  --pt-info: #9cb9d6;
+  --pt-info-soft: rgba(156, 185, 214, 0.13);
+
+  --pt-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --pt-shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.32);
+  --pt-shadow-md: 0 20px 44px -30px rgba(0, 0, 0, 0.5);
+}
+
+html,
+body {
+  font-family: var(--font-ui);
+}
+
+/* ==================================================
+   SCROLLBAR VERTIKAL TEPI KANAN LAYAR
+   Ramping, jalur (track) transparan, dan warna thumb
+   menyatu dengan latar tema. Warna menguat halus saat
+   kursor berada di atas thumb.
+================================================== */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+}
+
+html.dark-mode {
+  scrollbar-color: rgba(58, 72, 90, 0.7) transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+html::-webkit-scrollbar-track,
+html::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+html.dark-mode::-webkit-scrollbar-thumb {
+  background-color: rgba(58, 72, 90, 0.7);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.7);
+}
+
+html.dark-mode::-webkit-scrollbar-thumb:hover {
+  background-color: #93b4d6;
+}
+
+body {
+  font-size: 15px;
+  line-height: 1.55;
+  background: var(--pt-bg);
+  color: var(--pt-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fokus keyboard yang konsisten dan tenang di seluruh halaman. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--pt-brand);
+  outline-offset: 2px;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+/* Judul memakai Fraunces: hangat, seperti buku catatan sekolah. */
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+
+/* Angka dan kode (NIS, NIP, UID, jam) memakai mono agar mudah dibandingkan. */
+.font-data,
+.reg-mono,
+.status-badge,
+.data-table td,
+.data-table th {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--pt-brand-soft);
+  color: var(--pt-ink);
+}
+
+/* ==================================================
+   TOAST GLOBAL
+   Notifikasi singkat dengan warna semantik yang lembut.
+================================================== */
+
+.toast-host {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 400;
+  display: grid;
+  gap: 10px;
+  width: min(380px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 12px 12px 14px;
+  border: 1px solid var(--pt-line);
+  border-left: 4px solid var(--pt-info);
+  border-radius: 11px;
+  background: var(--pt-surface);
+  color: var(--pt-ink);
+  box-shadow: var(--pt-shadow-md);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  pointer-events: auto;
+}
+
+.toast > svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--pt-info);
+}
+
+.toast > span {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast > button {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin: -3px -4px -3px 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--pt-muted);
+  cursor: pointer;
+}
+
+.toast > button:hover {
+  background: var(--pt-surface-2);
+  color: var(--pt-ink);
+}
+
+.toast-success {
+  border-left-color: var(--pt-success);
+}
+
+.toast-success > svg {
+  color: var(--pt-success);
+}
+
+.toast-error {
+  border-left-color: var(--pt-danger);
+}
+
+.toast-error > svg {
+  color: var(--pt-danger);
+}
+
+.toast-info {
+  border-left-color: var(--pt-info);
+}
+
+@media (max-width: 560px) {
+  .toast-host {
+    right: 12px;
+    bottom: 12px;
+  }
+}

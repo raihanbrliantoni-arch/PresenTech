@@ -1,0 +1,1915 @@
+/* ==================================================
+   PRESENTECH — REDESIGN LAYER v2
+   Dimuat paling akhir agar menjadi acuan visual final.
+   Semua warna memakai token agar dark mode konsisten.
+   Kontras teks mengikuti WCAG 2.1 (AA).
+================================================== */
+
+.admin-dashboard,
+.role-dashboard.role-dashboard {
+  /* Palet light: biru-kelabu sejuk, aksen baja lembut */
+  --ui-bg: #f1f5f9;
+  --ui-surface: #ffffff;
+  --ui-surface-2: #f8fafc;
+  --ui-ink: #1f2a3a;
+  --ui-ink-soft: #3a4658;
+  --ui-muted: #5f6f83;
+  --ui-line: #dfe6ee;
+  --ui-line-strong: #c8d3df;
+  --ui-line-soft: #e8eef5;
+  --ui-brand: #355f8a;
+  --ui-brand-dark: #2b4d70;
+  --ui-brand-soft: #e8eff7;
+  --ui-on-brand: #ffffff;
+  --ui-accent: #4f6f8f;
+  --ui-accent-soft: #edf2f7;
+  --ui-success: #2f6b4f;
+  --ui-success-soft: #e7f2eb;
+  --ui-on-success: #ffffff;
+  --ui-warn: #8a5a1c;
+  --ui-warn-soft: #fbf2e2;
+  --ui-danger: #a43d3d;
+  --ui-danger-soft: #faebeb;
+  --ui-on-danger: #ffffff;
+  --ui-info: #3b6d90;
+  --ui-info-soft: #e8f0f7;
+  --ui-hover: #e8eef5;
+  --ui-hover-soft: #eef3f8;
+  --ui-radius: 10px;
+  --ui-shadow: 0 1px 2px rgba(31, 42, 58, 0.05);
+  --ui-shadow-lg: 0 20px 44px -28px rgba(31, 42, 58, 0.3);
+
+  --ad-bg: var(--ui-bg);
+  --ad-card: var(--ui-surface);
+  --ad-text: var(--ui-ink);
+  --ad-muted: var(--ui-muted);
+  --ad-border: var(--ui-line);
+  --ad-primary: var(--ui-brand);
+  --ad-primary-soft: var(--ui-brand-soft);
+  --ad-success: var(--ui-success);
+  --ad-warning: var(--ui-warn);
+  --ad-danger: var(--ui-danger);
+  --ad-shadow: var(--ui-shadow);
+
+  --role-bg: var(--ui-bg);
+  --role-card: var(--ui-surface);
+  --role-text: var(--ui-ink);
+  --role-muted: var(--ui-muted);
+  --role-border: var(--ui-line);
+  --role-primary: var(--ui-brand);
+  --role-primary-soft: var(--ui-brand-soft);
+
+  color: var(--ui-ink);
+  font-family: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Palet dark lengkap: dideklarasikan SETELAH palet light agar tidak tertimpa,
+   termasuk untuk dashboard Guru/Siswa yang memakai kelas ganda. */
+.admin-dashboard.dark,
+.role-dashboard.dark {
+  --ui-bg: #101720;
+  --ui-surface: #17212e;
+  --ui-surface-2: #121b26;
+  --ui-ink: #e7edf4;
+  --ui-ink-soft: #c2cedc;
+  --ui-muted: #96a5b8;
+  --ui-line: #293545;
+  --ui-line-strong: #3a485a;
+  --ui-line-soft: #1e2937;
+  --ui-hover: #1b2635;
+  --ui-hover-soft: #17212e;
+  --ui-brand: #93b4d6;
+  --ui-brand-dark: #b3cbe4;
+  --ui-brand-soft: rgba(147, 180, 214, 0.14);
+  --ui-on-brand: #14202e;
+  --ui-accent: #aec1d4;
+  --ui-accent-soft: rgba(174, 193, 212, 0.12);
+  --ui-success: #86c3a1;
+  --ui-success-soft: rgba(134, 195, 161, 0.13);
+  --ui-on-success: #12241a;
+  --ui-warn: #e2b878;
+  --ui-warn-soft: rgba(226, 184, 120, 0.13);
+  --ui-danger: #e9a09c;
+  --ui-danger-soft: rgba(233, 160, 156, 0.13);
+  --ui-on-danger: #2a1717;
+  --ui-info: #9cb9d6;
+  --ui-info-soft: rgba(156, 185, 214, 0.13);
+  --ui-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --ui-shadow-lg: 0 24px 60px -26px rgba(0, 0, 0, 0.52);
+
+  --ad-bg: var(--ui-bg);
+  --ad-card: var(--ui-surface);
+  --ad-text: var(--ui-ink);
+  --ad-muted: var(--ui-muted);
+  --ad-border: var(--ui-line);
+  --ad-primary: var(--ui-brand);
+  --ad-primary-soft: var(--ui-brand-soft);
+  --ad-sidebar: #0c141d;
+  --ad-shadow: var(--ui-shadow);
+
+  --role-bg: var(--ui-bg);
+  --role-card: var(--ui-surface);
+  --role-text: var(--ui-ink);
+  --role-muted: var(--ui-muted);
+  --role-border: var(--ui-line);
+  --role-primary: var(--ui-brand);
+  --role-primary-soft: var(--ui-brand-soft);
+
+  color-scheme: dark;
+}
+
+/* Logo tidak perlu kotak putih di dark mode */
+.role-dashboard.dark img,
+.admin-dashboard.dark .admin-brand img {
+  background: transparent;
+}
+
+/* Tipografi tajam */
+.admin-dashboard .page-head h2,
+.role-dashboard .role-page-head h2 {
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ui-ink);
+  margin: 4px 0 6px;
+}
+
+.admin-dashboard .page-head p,
+.role-dashboard .role-page-head p {
+  font-size: 13.5px;
+  color: var(--ui-muted);
+}
+
+.admin-dashboard .eyebrow,
+.role-dashboard .role-eyebrow {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ui-brand);
+}
+
+.admin-dashboard .panel-header h3,
+.admin-dashboard .panel h2,
+.admin-dashboard .panel h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Panel & kartu */
+.admin-dashboard .panel,
+.role-dashboard .role-card,
+.role-dashboard .role-panel {
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius);
+  padding: 22px;
+  box-shadow: var(--ui-shadow);
+  color: var(--ui-ink);
+}
+
+.admin-dashboard .page-stack,
+.role-dashboard .role-page-stack,
+.role-dashboard .role-stack {
+  gap: 22px;
+}
+
+/* ==================================================
+   SIDEBAR TERKELOMPOK
+================================================== */
+.admin-dashboard .admin-sidebar {
+  background: var(--ui-surface);
+  border-right: 1px solid var(--ui-line);
+  padding: 18px 14px 14px;
+  gap: 6px;
+  overflow: hidden; /* area gulir ada di .nav-groups */
+}
+
+.admin-dashboard .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ui-ink-soft);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.admin-dashboard .menu-item svg {
+  flex: 0 0 auto;
+  color: var(--ui-muted);
+  transition: color 0.16s ease;
+}
+
+.admin-dashboard .menu-item:hover {
+  background: var(--ui-hover);
+  color: var(--ui-ink);
+}
+
+.admin-dashboard .menu-item:hover svg {
+  color: var(--ui-brand);
+}
+
+.admin-dashboard .menu-item.active {
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+  font-weight: 800;
+  box-shadow: inset 3px 0 0 var(--ui-accent);
+}
+
+.admin-dashboard .menu-item.active svg {
+  color: var(--ui-brand);
+}
+
+.admin-dashboard .menu-item b {
+  margin-left: auto;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Area menu dapat digulir sendiri; brand & tombol bawah tetap di tempat */
+.admin-dashboard .nav-groups {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.25s ease;
+}
+
+.admin-dashboard .nav-groups:hover {
+  scrollbar-color: var(--ui-line-strong) transparent;
+}
+
+.admin-dashboard .nav-groups::-webkit-scrollbar {
+  width: 4px;
+}
+
+.admin-dashboard .nav-groups::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-dashboard .nav-groups::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+.admin-dashboard .nav-groups:hover::-webkit-scrollbar-thumb {
+  background: var(--ui-line-strong);
+}
+
+.nav-group {
+  display: grid;
+  gap: 2px;
+  margin-top: 10px;
+}
+
+.nav-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 12px 7px;
+  border: 0;
+  background: transparent;
+  color: var(--ui-muted);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.nav-group-head:hover {
+  color: var(--ui-ink);
+  background: var(--ui-hover-soft);
+}
+
+.nav-group-head .nav-group-chevron {
+  transition: transform 0.18s ease;
+  transform: rotate(-90deg);
+}
+
+.nav-group.open .nav-group-head .nav-group-chevron {
+  transform: rotate(0deg);
+}
+
+.nav-group-items {
+  display: grid;
+  gap: 2px;
+  padding-bottom: 4px;
+}
+
+/* Profil & Keluar digabung dalam satu baris ringkas, tidak melayang */
+.admin-dashboard .sidebar-bottom {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ui-line);
+  background: transparent;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  flex: 0 0 auto;
+  position: static;
+}
+
+.admin-dashboard .sidebar-bottom .menu-item,
+.admin-dashboard .sidebar-bottom .logout-button {
+  margin: 0;
+  padding: 10px 8px;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  border: 1px solid var(--ui-line);
+  border-radius: 9px;
+  background: var(--ui-surface-2);
+  color: var(--ui-ink-soft);
+}
+
+.admin-dashboard .sidebar-bottom .menu-item:hover {
+  background: var(--ui-brand-soft);
+  border-color: var(--ui-brand);
+  color: var(--ui-brand);
+}
+
+.admin-dashboard .sidebar-bottom .logout-button {
+  background: var(--ui-danger-soft);
+  border-color: color-mix(in srgb, var(--ui-danger) 24%, transparent);
+  color: var(--ui-danger);
+}
+
+.admin-dashboard .sidebar-bottom .logout-button:hover {
+  border-color: var(--ui-danger);
+  background: color-mix(in srgb, var(--ui-danger) 14%, transparent);
+}
+
+.admin-dashboard .sidebar-bottom svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==================================================
+   TABEL DATA BERSIH
+================================================== */
+.admin-dashboard .table-wrap {
+  overflow-x: auto;
+}
+
+.admin-dashboard.admin-dashboard table {
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.admin-dashboard.admin-dashboard thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 12px 16px;
+  background: var(--ui-surface-2);
+  border-bottom: 1px solid var(--ui-line);
+  color: var(--ui-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.admin-dashboard.admin-dashboard tbody td {
+  padding: 15px 16px;
+  border-bottom: 1px solid var(--ui-line-soft);
+  color: var(--ui-ink-soft);
+  font-size: 13.5px;
+  vertical-align: middle;
+}
+
+.admin-dashboard.admin-dashboard tbody tr:hover td {
+  background: var(--ui-hover-soft);
+}
+
+.admin-dashboard.admin-dashboard tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-dashboard.admin-dashboard td strong {
+  color: var(--ui-ink);
+  font-weight: 700;
+}
+
+.admin-dashboard .cell-sub {
+  display: block;
+  margin-top: 3px;
+  color: var(--ui-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Checkbox bulk */
+.admin-dashboard .row-check {
+  width: 48px;
+  text-align: center;
+}
+
+.admin-dashboard .row-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--ui-brand);
+  cursor: pointer;
+}
+
+.admin-dashboard tbody tr.selected td {
+  background: var(--ui-brand-soft);
+}
+
+.bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--ui-brand) 28%, transparent);
+  border-radius: 10px;
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bulk-bar .bulk-count {
+  margin-right: auto;
+}
+
+.bulk-bar button {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--ui-brand) 34%, transparent);
+  background: var(--ui-surface);
+  color: var(--ui-brand);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bulk-bar button:hover {
+  border-color: var(--ui-brand);
+}
+
+.bulk-bar button.danger {
+  border-color: color-mix(in srgb, var(--ui-danger) 32%, transparent);
+  background: var(--ui-danger-soft);
+  color: var(--ui-danger);
+}
+
+/* ==================================================
+   BADGE STATUS + GLOWING DOT
+================================================== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--ui-line);
+  background: var(--ui-surface-2);
+  color: var(--ui-ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-badge i {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+  background: var(--ui-muted);
+}
+
+.status-badge.online {
+  border-color: color-mix(in srgb, var(--ui-success) 28%, transparent);
+  background: var(--ui-success-soft);
+  color: var(--ui-success);
+}
+
+.status-badge.online i {
+  background: var(--ui-success);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-success) 16%, transparent);
+}
+
+.status-badge.maintenance {
+  border-color: color-mix(in srgb, var(--ui-warn) 30%, transparent);
+  background: var(--ui-warn-soft);
+  color: var(--ui-warn);
+}
+
+.status-badge.maintenance i {
+  background: var(--ui-warn);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-warn) 15%, transparent);
+}
+
+.status-badge.offline {
+  border-color: color-mix(in srgb, var(--ui-danger) 26%, transparent);
+  background: var(--ui-danger-soft);
+  color: var(--ui-danger);
+}
+
+.status-badge.offline i {
+  background: var(--ui-danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-danger) 14%, transparent);
+}
+
+/* ==================================================
+   MENU TIGA TITIK (HIT TARGET 44x44)
+================================================== */
+.row-menu {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.row-menu-trigger {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ui-muted);
+  cursor: pointer;
+}
+
+.row-menu-trigger:hover,
+.row-menu-trigger[aria-expanded="true"] {
+  background: var(--ui-hover);
+  border-color: var(--ui-line);
+  color: var(--ui-ink);
+}
+
+.row-menu-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  min-width: 184px;
+  padding: 6px;
+  border: 1px solid var(--ui-line);
+  border-radius: 10px;
+  background: var(--ui-surface);
+  box-shadow: var(--ui-shadow-lg);
+  display: grid;
+  gap: 2px;
+}
+
+.row-menu-list button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ui-ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row-menu-list button:hover {
+  background: var(--ui-hover);
+  color: var(--ui-ink);
+}
+
+.row-menu-list button.danger {
+  color: var(--ui-danger);
+}
+
+.row-menu-list button.danger:hover {
+  background: var(--ui-danger-soft);
+}
+
+/* ==================================================
+   RINGKASAN + GAUGE + TREN
+================================================== */
+.summary-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.55fr);
+  gap: 22px;
+}
+
+.gauge-card {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 24px;
+}
+
+.gauge-card .gauge-copy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.gauge-card .gauge-copy h3 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--ui-ink);
+  letter-spacing: -0.01em;
+}
+
+.gauge-card .gauge-copy p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ui-muted);
+  line-height: 1.5;
+}
+
+.gauge-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+
+.gauge-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gauge-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--ui-accent);
+}
+
+.gauge-legend i.muted {
+  background: var(--ui-line-strong);
+}
+
+.donut-gauge {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+}
+
+.donut-gauge svg {
+  display: block;
+}
+
+.donut-track {
+  stroke: var(--ui-line-soft);
+}
+
+.donut-value {
+  stroke: var(--ui-accent);
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.donut-gauge.tone-brand .donut-value {
+  stroke: var(--ui-brand);
+}
+
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 2px;
+}
+
+.donut-center strong {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ui-ink);
+  line-height: 1;
+}
+
+.donut-center span {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ui-muted);
+}
+
+/* Quick actions */
+.quick-card {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.quick-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.quick-card-head h3 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--ui-ink);
+}
+
+.quick-card-head p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--ui-muted);
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quick-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 62px;
+  padding: 14px;
+  border: 1px solid var(--ui-line);
+  border-radius: 10px;
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
+}
+
+.quick-action:hover {
+  border-color: var(--ui-brand);
+  background: var(--ui-brand-soft);
+  transform: translateY(-1px);
+}
+
+.quick-action.primary {
+  border-color: var(--ui-brand);
+  background: var(--ui-brand);
+  color: var(--ui-on-brand);
+}
+
+.quick-action.primary small {
+  color: color-mix(in srgb, var(--ui-on-brand) 78%, transparent);
+}
+
+.quick-action.primary .quick-icon {
+  background: color-mix(in srgb, var(--ui-on-brand) 16%, transparent);
+  color: var(--ui-on-brand);
+}
+
+.quick-action .quick-icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+}
+
+.quick-action small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ui-muted);
+}
+
+/* Grafik garis mingguan */
+.trend-chart {
+  width: 100%;
+  display: block;
+}
+
+.trend-chart .trend-grid {
+  stroke: var(--ui-line);
+  stroke-dasharray: 3 4;
+}
+
+.trend-chart .trend-line {
+  fill: none;
+  stroke: var(--ui-brand);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trend-chart .trend-area {
+  fill: color-mix(in srgb, var(--ui-brand) 14%, transparent);
+}
+
+.trend-chart .trend-dot {
+  fill: var(--ui-surface);
+  stroke: var(--ui-brand);
+  stroke-width: 2.5;
+}
+
+.trend-chart text {
+  fill: var(--ui-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.trend-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+
+.trend-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trend-legend i {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--ui-brand);
+}
+
+.trend-legend i.muted {
+  background: var(--ui-line-strong);
+}
+
+/* ==================================================
+   MODAL EKSPOR
+================================================== */
+.modal-backdrop {
+  background: rgba(9, 15, 24, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.export-modal {
+  width: min(560px, 100%);
+  border-radius: 16px;
+  border: 1px solid var(--ui-line);
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  padding: 24px;
+}
+
+.export-modal .modal-head h2 {
+  font-size: 20.5px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ui-ink);
+}
+
+.export-modal .modal-head p {
+  font-size: 13px;
+  color: var(--ui-muted);
+}
+
+.modal-close {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--ui-line);
+  background: var(--ui-surface);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--ui-muted);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--ui-brand);
+  border-color: var(--ui-brand);
+}
+
+.export-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.export-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ui-muted);
+}
+
+.export-summary {
+  margin-top: 14px;
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: var(--ui-surface-2);
+  border: 1px solid var(--ui-line);
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+
+.export-summary strong {
+  font-size: 14.5px;
+  color: var(--ui-ink);
+}
+
+.export-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.export-note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--ui-muted);
+}
+
+.format-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.format-tile {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  min-height: 96px;
+  padding: 14px 10px;
+  border: 1.5px solid var(--ui-line);
+  border-radius: 12px;
+  background: var(--ui-surface);
+  color: var(--ui-ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+
+.format-tile svg {
+  color: var(--ui-muted);
+}
+
+.format-tile small {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ui-muted);
+}
+
+.format-tile:hover {
+  border-color: var(--ui-brand);
+}
+
+.format-tile.selected {
+  border-color: var(--ui-brand);
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+}
+
+.format-tile.selected svg,
+.format-tile.selected small {
+  color: var(--ui-brand);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+/* ==================================================
+   TOMBOL, INPUT, PENCARIAN
+================================================== */
+.admin-dashboard .primary-button,
+.admin-dashboard .secondary-button,
+.role-dashboard .primary-button,
+.role-dashboard .secondary-button {
+  min-height: 40px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border-radius: 10px;
+}
+
+.admin-dashboard .primary-button,
+.role-dashboard .primary-button {
+  background: var(--ui-brand);
+  border-color: var(--ui-brand);
+  color: var(--ui-on-brand);
+}
+
+.admin-dashboard .primary-button:hover,
+.role-dashboard .primary-button:hover {
+  background: var(--ui-brand-dark);
+  border-color: var(--ui-brand-dark);
+}
+
+.admin-dashboard .secondary-button,
+.role-dashboard .secondary-button {
+  background: var(--ui-surface);
+  border-color: var(--ui-line-strong);
+  color: var(--ui-ink-soft);
+}
+
+.admin-dashboard .secondary-button:hover,
+.role-dashboard .secondary-button:hover {
+  border-color: var(--ui-brand);
+  color: var(--ui-brand);
+}
+
+/* Pencarian: input transparan, caret & teks selalu terlihat */
+.admin-dashboard .search {
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ui-line);
+  background: var(--ui-surface);
+  color: var(--ui-muted);
+}
+
+.admin-dashboard.admin-dashboard .search input:not([type="checkbox"]):not([type="radio"]) {
+  height: auto;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ui-ink);
+  caret-color: var(--ui-brand);
+  font-size: 13px;
+  line-height: 1.3;
+  min-width: 0;
+}
+
+.admin-dashboard .search input::placeholder {
+  color: var(--ui-muted);
+  opacity: 1;
+}
+
+.admin-dashboard .search:focus-within {
+  border-color: var(--ui-brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-brand) 18%, transparent);
+}
+
+.admin-dashboard .schedule-search {
+  flex: 0 0 300px;
+  max-width: 300px;
+  min-width: 0;
+  width: 300px;
+}
+
+.admin-dashboard .toolbar select {
+  border-radius: 10px;
+  color: var(--ui-ink-soft);
+  font-weight: 600;
+}
+
+/* Fokus keyboard */
+.admin-dashboard button:focus-visible,
+.admin-dashboard a:focus-visible,
+.admin-dashboard input:focus-visible,
+.admin-dashboard select:focus-visible,
+.admin-dashboard textarea:focus-visible,
+.role-dashboard button:focus-visible,
+.role-dashboard input:focus-visible,
+.role-dashboard select:focus-visible {
+  outline: 2px solid var(--ui-brand);
+  outline-offset: 2px;
+}
+
+/* Input/select umum di dalam modal & laporan */
+.admin-dashboard.admin-dashboard .export-form input:not([type="checkbox"]):not([type="radio"]),
+.admin-dashboard.admin-dashboard .export-form select {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--ui-line);
+  border-radius: 9px;
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .summary-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .gauge-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .format-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .export-form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-dashboard .schedule-search {
+    flex: 1 1 auto;
+    max-width: none;
+    width: auto;
+  }
+}
+
+/* ===== Modal: scroll aman + tombol aksi tidak menutupi field ===== */
+.admin-dashboard .modal,
+.role-dashboard .modal {
+  max-height: min(90vh, 860px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-padding-bottom: 16px;
+  overscroll-behavior: contain;
+  padding-bottom: 22px;
+}
+
+.admin-dashboard .modal .setting,
+.admin-dashboard .modal .export-form label {
+  scroll-margin-block: 96px;
+}
+
+.admin-dashboard .modal .setting:last-of-type {
+  margin-bottom: 2px;
+}
+
+.admin-dashboard .modal-actions {
+  position: sticky;
+  bottom: -22px;
+  margin-top: 18px;
+  padding: 14px 0 22px;
+  background: linear-gradient(to bottom, transparent, var(--ui-surface) 26%);
+}
+
+/* Panel dropdown di dalam modal tidak boleh terpotong */
+.admin-dashboard .modal,
+.admin-dashboard .panel {
+  overflow-anchor: none;
+}
+
+/* Menu tiga titik: panel fixed, tidak ikut terpotong container */
+.row-menu-list {
+  position: fixed;
+}
+
+/* Panel pencarian siswa: fixed + flip up */
+.student-picker-panel {
+  position: fixed;
+  left: auto;
+  right: auto;
+  top: auto;
+}
+
+/* ===== Data Master: lebar kolom rapi (nama dekat NIS) ===== */
+.admin-dashboard .data-table {
+  table-layout: fixed;
+}
+
+.admin-dashboard .data-table td strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-dashboard .data-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-dashboard .data-table .row-check {
+  width: 48px;
+}
+
+/* ===== Tipografi & warna seragam untuk Admin/Guru/Siswa ===== */
+.admin-dashboard,
+.role-dashboard.role-dashboard {
+  --ui-ink: #1f2a3a;
+  --ui-ink-soft: #3a4658;
+  --ui-muted: #5f6f83;
+}
+
+.admin-dashboard.dark,
+.role-dashboard.dark {
+  --ui-ink: #e7edf4;
+  --ui-ink-soft: #c2cedc;
+  --ui-muted: #96a5b8;
+}
+
+.admin-dashboard table th,
+.role-dashboard table th {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.admin-dashboard table td,
+.role-dashboard table td {
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.admin-dashboard .primary-button,
+.admin-dashboard .secondary-button,
+.role-dashboard .primary-button,
+.role-dashboard .secondary-button {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+/* Lihat semua / aksi teks */
+.admin-dashboard .text-button {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Label form & panel konsisten */
+.admin-dashboard .setting > span,
+.admin-dashboard .export-form label,
+.role-dashboard .setting > span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.admin-dashboard .panel-header h3,
+.role-dashboard .role-panel h3 {
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+
+/* ==================================================
+   FINAL PASS — SIDEBAR, TIPOGRAFI, TABEL, WARNA
+   Dimuat paling akhir (main.jsx) agar menimpa
+   dashboards.css dan *-dashboard.css.
+   Tujuan: satu skala teks, satu perilaku sidebar,
+   dan jarak kolom tabel yang seragam.
+================================================== */
+
+.admin-dashboard.admin-dashboard,
+.role-dashboard.role-dashboard {
+  font-family: var(--font-ui);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* --- Sidebar: satu area gulir ---
+   Blok Profil/Keluar ikut mengalir bersama menu, jadi tidak
+   lagi menempel di bawah layar saat menu di-scroll. */
+.admin-dashboard.admin-dashboard .admin-sidebar {
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 18px;
+}
+
+.admin-dashboard.admin-dashboard .nav-groups {
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: visible;
+  padding-right: 0;
+}
+
+/* Scrollbar sidebar ramping: track transparan, thumb menyatu dengan latar
+   dan baru muncul halus saat kursor berada di area sidebar. */
+.admin-dashboard .admin-sidebar,
+.role-dashboard .role-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.25s ease;
+}
+
+.admin-dashboard .admin-sidebar:hover,
+.role-dashboard .role-sidebar:hover {
+  scrollbar-color: color-mix(in srgb, var(--ui-line-strong) 70%, transparent) transparent;
+}
+
+.admin-dashboard .admin-sidebar::-webkit-scrollbar,
+.role-dashboard .role-sidebar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.admin-dashboard .admin-sidebar::-webkit-scrollbar-track,
+.role-dashboard .role-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-dashboard .admin-sidebar::-webkit-scrollbar-thumb,
+.role-dashboard .role-sidebar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+.admin-dashboard .admin-sidebar:hover::-webkit-scrollbar-thumb,
+.role-dashboard .role-sidebar:hover::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--ui-line-strong) 70%, transparent);
+}
+
+/* Scrollbar daftar notifikasi: sama rampingnya dengan scrollbar lain,
+   track transparan, thumb menyatu dengan tema dan menguat saat hover. */
+.admin-dashboard .notification-list,
+.role-dashboard .role-notification-list {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ui-line-strong) 65%, transparent) transparent;
+}
+
+.admin-dashboard .notification-list:hover,
+.role-dashboard .role-notification-list:hover {
+  scrollbar-color: var(--ui-line-strong) transparent;
+}
+
+.admin-dashboard .notification-list::-webkit-scrollbar,
+.role-dashboard .role-notification-list::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.admin-dashboard .notification-list::-webkit-scrollbar-track,
+.role-dashboard .role-notification-list::-webkit-scrollbar-track,
+.admin-dashboard .notification-list::-webkit-scrollbar-corner,
+.role-dashboard .role-notification-list::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.admin-dashboard .notification-list::-webkit-scrollbar-thumb,
+.role-dashboard .role-notification-list::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--ui-line-strong) 65%, transparent);
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+.admin-dashboard .notification-list:hover::-webkit-scrollbar-thumb,
+.role-dashboard .role-notification-list:hover::-webkit-scrollbar-thumb {
+  background-color: var(--ui-line-strong);
+}
+
+.admin-dashboard.admin-dashboard .nav-group-head {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.admin-dashboard.admin-dashboard .sidebar-account,
+.role-dashboard.role-dashboard .role-sidebar-account {
+  padding: 8px;
+  border: 1px solid var(--ui-line);
+  border-radius: 12px;
+  background: var(--ui-surface-2);
+  display: grid;
+  gap: 2px;
+}
+
+.admin-dashboard.admin-dashboard .sidebar-account {
+  margin-top: 14px;
+}
+
+/* Blok Akun Guru/Siswa menempel di dasar sidebar (kiri bawah). */
+.role-dashboard.role-dashboard .role-sidebar-account {
+  margin-top: auto;
+}
+
+.admin-dashboard.admin-dashboard .sidebar-account .menu-title,
+.role-dashboard.role-dashboard .role-sidebar-account .role-section-title {
+  margin: 2px 0 4px;
+  padding: 0 9px;
+  color: var(--ui-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.admin-dashboard.admin-dashboard .sidebar-account .menu-item,
+.admin-dashboard.admin-dashboard .sidebar-account .logout-button,
+.role-dashboard.role-dashboard .role-sidebar-account .role-menu-item,
+.role-dashboard.role-dashboard .role-sidebar-account .role-logout {
+  margin: 0;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ui-ink-soft);
+  font-size: 13.5px;
+  font-weight: 600;
+  justify-content: flex-start;
+}
+
+.admin-dashboard.admin-dashboard .sidebar-account .menu-item:hover,
+.role-dashboard.role-dashboard .role-sidebar-account .role-menu-item:hover {
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+}
+
+.admin-dashboard.admin-dashboard .sidebar-account .logout-button,
+.role-dashboard.role-dashboard .role-sidebar-account .role-logout {
+  color: var(--ui-danger);
+}
+
+.admin-dashboard.admin-dashboard .sidebar-account .logout-button:hover,
+.role-dashboard.role-dashboard .role-sidebar-account .role-logout:hover {
+  background: var(--ui-danger-soft);
+  color: var(--ui-danger);
+}
+
+/* --- Tipografi dashboard Guru & Siswa ---
+   Menyamakan skala dengan Admin: 11 / 12 / 13 / 15 / 22 / 24. */
+.role-dashboard.role-dashboard .role-menu-item,
+.role-dashboard.role-dashboard .role-logout {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.role-dashboard.role-dashboard .role-section-title {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.role-dashboard.role-dashboard .role-brand-button strong {
+  font-size: 15.5px;
+}
+
+.role-dashboard.role-dashboard .role-brand-button small {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.role-dashboard.role-dashboard .role-topbar h1 {
+  font-size: 18.5px;
+}
+
+.role-dashboard.role-dashboard .role-topbar p {
+  font-size: 13px;
+  color: var(--ui-muted);
+}
+
+.role-dashboard.role-dashboard .role-profile-text strong {
+  font-size: 13.5px;
+}
+
+.role-dashboard.role-dashboard .role-profile-text small {
+  font-size: 12px;
+}
+
+.role-dashboard.role-dashboard .role-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.role-dashboard.role-dashboard .role-page-head h2,
+.role-dashboard.role-dashboard .role-welcome h2 {
+  font-size: 22px;
+}
+
+.role-dashboard.role-dashboard .role-page-head p,
+.role-dashboard.role-dashboard .role-welcome p {
+  font-size: 13.5px;
+  color: var(--ui-muted);
+}
+
+.role-dashboard.role-dashboard .role-stat strong {
+  font-size: 24px;
+}
+
+.role-dashboard.role-dashboard .role-stat span {
+  font-size: 13px;
+}
+
+.role-dashboard.role-dashboard .role-panel-header h3 {
+  font-size: 15.5px;
+}
+
+.role-dashboard.role-dashboard .role-panel-header p {
+  font-size: 13px;
+  color: var(--ui-muted);
+}
+
+.role-dashboard.role-dashboard .role-panel-header button {
+  font-size: 13px;
+}
+
+.role-dashboard.role-dashboard .role-status {
+  font-size: 12px;
+  padding: 4px 9px;
+}
+
+.role-dashboard.role-dashboard .role-table-wrap th {
+  font-size: 12px;
+}
+
+.role-dashboard.role-dashboard .role-table-wrap td {
+  font-size: 13.5px;
+}
+
+/* --- Kartu jadwal Guru/Siswa (sekarang 5 hari, satu baris) --- */
+.role-dashboard.role-dashboard .weekly-schedule {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.role-dashboard.role-dashboard .day-card {
+  min-height: 0;
+  padding: 14px;
+  border: 1px solid var(--ui-line);
+  border-radius: 12px;
+  background: var(--ui-surface);
+}
+
+.role-dashboard.role-dashboard .day-card > strong {
+  display: block;
+  color: var(--ui-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.role-dashboard.role-dashboard .day-card > small {
+  display: block;
+  margin-top: 2px;
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+
+.role-dashboard.role-dashboard .day-card.today {
+  border-color: var(--ui-brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-brand) 12%, transparent);
+}
+
+.role-dashboard.role-dashboard .day-card.today > small {
+  color: var(--ui-brand);
+}
+
+.role-dashboard.role-dashboard .day-item {
+  margin-top: 10px;
+  padding: 9px 10px;
+  gap: 2px;
+  border: 1px solid var(--ui-line);
+  border-radius: 9px;
+  background: var(--ui-surface-2);
+}
+
+.role-dashboard.role-dashboard .day-item b {
+  color: var(--ui-brand);
+  font-size: 13px;
+}
+
+.role-dashboard.role-dashboard .day-item span {
+  color: var(--ui-ink);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.role-dashboard.role-dashboard .day-item small {
+  color: var(--ui-muted);
+  font-size: 12px;
+}
+
+.role-dashboard.role-dashboard .no-schedule {
+  display: block;
+  margin-top: 14px;
+  color: var(--ui-muted);
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .role-dashboard.role-dashboard .weekly-schedule {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .role-dashboard.role-dashboard .weekly-schedule {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Tabel: kolom mengalir seperti tabel Absensi ---
+   Tidak ada lagi colgroup dengan kolom "auto" yang membuat
+   jarak kolom Nama melar. */
+.admin-dashboard.admin-dashboard table {
+  table-layout: auto;
+}
+
+.admin-dashboard.admin-dashboard .data-table th,
+.admin-dashboard.admin-dashboard .data-table td,
+.role-dashboard.role-dashboard .role-table-wrap th,
+.role-dashboard.role-dashboard .role-table-wrap td {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.admin-dashboard.admin-dashboard .log-summary,
+.admin-dashboard.admin-dashboard .pagination-controls {
+  color: var(--ui-muted);
+  font-size: 13px;
+}
+
+/* --- Warna: label kecil tetap terbaca di mode terang & gelap --- */
+.admin-dashboard.admin-dashboard .eyebrow,
+.role-dashboard.role-dashboard .role-eyebrow {
+  color: var(--ui-brand);
+}
+
+.admin-dashboard.admin-dashboard .menu-item b {
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+}
+
+.admin-dashboard.dark .sidebar-account,
+.role-dashboard.dark .role-sidebar-account,
+.admin-dashboard.dark .role-sidebar-account {
+  background: var(--ui-surface-2);
+  border-color: var(--ui-line);
+}
+
+.admin-dashboard .sidebar-account .logout-button,
+.role-dashboard .role-sidebar-account .role-logout {
+  color: var(--ui-danger);
+}
+
+/* --- Teks kecil: minimum 11px agar tidak menyiksa mata --- */
+.admin-dashboard.admin-dashboard .admin-brand small,
+.role-dashboard.role-dashboard .role-brand-button small {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.admin-dashboard.admin-dashboard .eyebrow,
+.role-dashboard.role-dashboard .role-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
+.admin-dashboard.admin-dashboard .menu-item b {
+  font-size: 12px;
+}
+
+.admin-dashboard.admin-dashboard .quick-action small {
+  font-size: 13px;
+}
+
+.admin-dashboard.admin-dashboard .trend-chart text {
+  font-size: 12px;
+}
+
+.admin-dashboard.admin-dashboard small,
+.role-dashboard.role-dashboard small {
+  font-size: 13px;
+}
+
+/* --- Tabel data master: kolom tetap rapat walau isinya panjang --- */
+.admin-dashboard.admin-dashboard .data-table {
+  table-layout: fixed;
+}
+
+.admin-dashboard.admin-dashboard .data-table .row-check {
+  width: 52px;
+}
+
+.admin-dashboard.admin-dashboard .data-table th:last-child,
+.admin-dashboard.admin-dashboard .data-table td:last-child {
+  width: 64px;
+}
+
+.admin-dashboard.admin-dashboard .data-table th {
+  white-space: nowrap;
+}
+
+.admin-dashboard.admin-dashboard .data-table td {
+  max-width: 320px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* --- Log Sistem: teks detail & catatan dibuat senyaman tabel --- */
+.admin-dashboard.admin-dashboard .log-notice strong {
+  font-size: 13.5px;
+}
+
+.admin-dashboard.admin-dashboard .log-notice span {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.admin-dashboard.admin-dashboard .log-content strong {
+  font-size: 13.5px;
+}
+
+.admin-dashboard.admin-dashboard .log-content small,
+.admin-dashboard.admin-dashboard .log-content p {
+  font-size: 13px;
+}
+
+.admin-dashboard.admin-dashboard .log-type {
+  font-size: 12px;
+}
+
+.admin-dashboard.admin-dashboard .toolbar select,
+.admin-dashboard.admin-dashboard select {
+  font-size: 13.5px;
+}
+
+/* Judul banner memakai tipografi display agar tidak seragam dengan UI. */
+.admin-dashboard .welcome h2,
+.role-dashboard .role-welcome h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ==================================================
+   POLES ROLLBACK - dashboard krem/indigo.
+   Hanya kerapian visual; struktur & alur tidak berubah.
+================================================= */
+
+/* Topbar solid agar isi halaman tidak membayang saat digulir. */
+.admin-dashboard.admin-dashboard .admin-topbar,
+.role-dashboard.role-dashboard .role-topbar {
+  background: var(--ui-surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 1px 0 var(--ui-line);
+}
+
+/* Banner sambutan selalu berlatar indigo tua: teks harus terang. */
+.admin-dashboard.admin-dashboard .welcome p,
+.role-dashboard.role-dashboard .role-welcome p,
+.role-dashboard.role-dashboard .welcome p {
+  color: rgba(231, 237, 244, 0.8);
+}
+
+.admin-dashboard.admin-dashboard .welcome .eyebrow,
+.role-dashboard.role-dashboard .role-welcome .role-eyebrow,
+.role-dashboard.role-dashboard .welcome .eyebrow {
+  color: #a9c1d9;
+}
+
+.admin-dashboard.admin-dashboard .welcome h2,
+.role-dashboard.role-dashboard .role-welcome h2,
+.role-dashboard.role-dashboard .welcome h2 {
+  color: #ffffff;
+}
+
+.admin-dashboard.admin-dashboard .welcome > svg,
+.role-dashboard.role-dashboard .role-welcome > svg,
+.role-dashboard.role-dashboard .welcome > svg {
+  color: #a9c1d9;
+}
+
+/* Tombol aksi cepat bawaan browser diberi bentuk kartu. */.admin-dashboard .quick-action-grid button,
+.admin-dashboard .system-action-grid button {
+  padding: 9px 12px;
+  border: 1px solid var(--ui-line);
+  border-radius: 10px;
+  background: var(--ui-surface);
+  color: var(--ui-ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+
+.admin-dashboard .quick-action-grid button:hover,
+.admin-dashboard .system-action-grid button:hover {
+  border-color: var(--ui-brand);
+  background: var(--ui-brand-soft);
+  color: var(--ui-brand);
+}
+
+.admin-dashboard.dark .quick-action-grid button,
+.admin-dashboard.dark .system-action-grid button {
+  background: var(--ui-surface-2);
+  border-color: var(--ui-line);
+  color: var(--ui-ink);
+}
+
+.admin-dashboard.dark .quick-action-grid button:hover,
+.admin-dashboard.dark .system-action-grid button:hover {
+  background: var(--ui-brand-soft);
+  border-color: var(--ui-brand);
+  color: var(--ui-brand);
+}
+
+/* Kartu aksi utama mengikuti warna teks di atas merek. */
+.dark .quick-action.primary {
+  color: var(--ui-on-brand);
+}
+
+.dark .quick-action.primary small {
+  color: color-mix(in srgb, var(--ui-on-brand) 76%, transparent);
+}
+
+.dark .quick-action.primary .quick-icon {
+  background: color-mix(in srgb, var(--ui-on-brand) 12%, transparent);
+  color: var(--ui-on-brand);
+}
+
+/* Tabel lebar boleh digulir mendatar agar keterangan tidak terpotong. */
+.admin-dashboard .table-wrap,
+.role-dashboard .table-wrap {
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+/* Kolom keterangan boleh membungkus agar tabel muat tanpa gulir. */
+.admin-dashboard .table-wrap.attendance-table td:last-child {
+  min-width: 220px;
+  max-width: 340px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Fokus keyboard pada kontrol dashboard. */
+.admin-dashboard button:focus-visible,
+.admin-dashboard a:focus-visible,
+.role-dashboard button:focus-visible,
+.role-dashboard a:focus-visible {
+  outline: 2px solid var(--ui-brand);
+  outline-offset: 2px;
+}
+
+/* Warna teks di atas isian merek, sukses, dan bahaya. */
+.admin-dashboard .primary-button,
+.role-dashboard .primary-button,
+.role-dashboard .role-primary,
+.admin-dashboard .avatar,
+.role-dashboard .role-avatar,
+.admin-dashboard .notification-filters button.active,
+.role-dashboard .role-notification-filters button.active {
+  color: var(--ui-on-brand);
+}
+
+.admin-dashboard .notification-wrap i,
+.role-dashboard .role-notification-wrap i {
+  color: var(--ui-on-danger);
+}
+
+.admin-dashboard .save-toast {
+  color: var(--ui-on-success);
+}
+
+/* Status kesehatan perangkat memakai warna semantik, bukan biru dekoratif. */
+.health-dot.online,
+.live-dot,
+.live i,
+.live-admin-item > i {
+  background: var(--ui-success);
+}
+
+.health-dot.warn {
+  background: var(--ui-warn);
+}
+
+.health-dot.offline {
+  background: var(--ui-danger);
+}

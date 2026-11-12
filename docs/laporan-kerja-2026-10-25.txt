@@ -1,0 +1,271 @@
+LAPORAN KERJA - PRESENTECH
+Tanggal : 25-26 Oktober 2026
+Lingkup : Integrasi alat RFID ESP32 dengan API Laravel + laporan proyek
+Status  : Kode selesai, pengujian otomatis lulus, PDF laporan sudah dibuat
+
+
+1. RINGKASAN
+------------------------------------------------------------
+Pekerjaan hari ini berfokus pada penggantian alur lama
+(Google Apps Script + daftar siswa hardcoded di firmware) menjadi
+alur baru: ESP32 -> REST API Laravel -> MySQL, dengan autentikasi
+perangkat memakai header X-Device-Key.
+
+Hasil utama:
+- 2 endpoint perangkat baru (heartbeat & restart-ack).
+- Normalisasi UID RFID di backend (kasus huruf besar/kecil dan
+  pemisah karakter tidak lagi membuat kartu gagal dikenali).
+- Scheduler penanda perangkat offline.
+- Firmware baru berbasis WiFi (bukan Ethernet) di
+  D:\Coding\Arduino\PresenTech_alat\.
+- Laporan proyek lengkap: Markdown, HTML, dan PDF 15 halaman.
+- Seluruh test backend lulus: 83 test, 305 assertion (setelah fitur scan).
+
+
+2. PERUBAHAN BACKEND (Laravel)
+------------------------------------------------------------
+File baru:
+- app/Support/RfidUid.php
+  normalize(): buang prefix 0x, buang pemisah (spasi : - . _),
+  ubah ke huruf besar, padding ganjil, trim.
+
+- app/Console/Commands/MarkDevicesOffline.php
+  Perintah devices:mark-offline {--seconds=90}: perangkat berstatus
+  Online tanpa heartbeat dalam batas waktu -> Offline.
+
+- database/migrations/2026_10_25_230115_add_restart_requested_at_to_devices_table.php
+  Kolom restart_requested_at (nullable) setelah last_restart_at.
+
+File diubah:
+- app/Http/Controllers/Api/DeviceController.php
+  + heartbeatByKey()      : heartbeat hanya dengan X-Device-Key,
+                            validasi ip/firmware, pertahankan status
+                            Maintenance, set Online + last_seen_at,
+                            audit device.online, balas server_time,
+                            late_time, restart_requested.
+  + acknowledgeRestart()  : hapus flag restart_requested_at.
+  + resolveDeviceFromKey(): 401 "Device key wajib dikirim." /
+                            "Device key tidak valid."
+  * restart()             : kini mengisi restart_requested_at.
+
+- app/Http/Controllers/Api/AttendanceController.php
+  Normalisasi uid sebelum validasi (RfidUid::normalize).
+
+- app/Http/Controllers/Api/RfidCardController.php
+  Normalisasi uid pada index (filter), store, dan update.
+
+- app/Models/Device.php
+  restart_requested_at masuk fillable + cast.
+
+- routes/api.php
+  + POST /api/device/heartbeat     (throttle:device)
+  + POST /api/device/restart-ack   (throttle:device)
+
+- routes/console.php
+  Schedule::command('devices:mark-offline')->everyMinute().
+
+
+3. PENGUJIAN OTOMATIS
+------------------------------------------------------------
+Total suite: 83 test, 305 assertion, SEMUA LULUS.
+
+Test baru:
+- tests/Unit/RfidUidTest.php        8 kasus normalisasi UID.
+- tests/Feature/DeviceTest.php      7 test: heartbeat sukses, 401
+  tanpa key, 401 key salah, status Maintenance dipertahankan,
+  restart + ack, ack 401, perintah mark-offline.
+- tests/Feature/RfidCardTest.php    3 test: simpan UID uppercase,
+  duplikat dengan format berbeda -> 422, filter ternormalisasi.
+- tests/Feature/AttendanceTest.php  +1 test: UID huruf kecil +
+  pemisah tetap dikenali, uid_snapshot tersimpan uppercase.
+
+Catatan: JANGAN menjalankan config/route cache sebelum
+php artisan test (pernah menghapus isi DB). Test memakai
+sqlite :memory: sesuai phpunit.xml.
+
+Pint: dijalankan, hanya routes/api.php (urutan import) yang dirapikan.
+
+
+4. FIRMWARE ESP32
+------------------------------------------------------------
+Lokasi: D:\Coding\Arduino\PresenTech_alat\
+- PresenTech_alat.ino (9.547 byte)
+- config.h            (kredensial asli, berisi device key ptd_...)
+- config.example.h    (template tanpa rahasia)
+
+Fitur:
+- WiFi STA + auto-reconnect (SSID "Raihan_2.4G"; password di config.h).
+- POST /attendance dengan body {"uid":"..."} + X-Device-Key.
+- UID dikirim uppercase format %02X (wajib, DB menyimpan uppercase).
+- Heartbeat tiap 3 detik ke /device/heartbeat (agar perintah web cepat).
+- Perintah restart dari server: baca restart_requested, kirim
+  /device/restart-ack, lalu ESP.restart().
+- Mode baca UID: baca scan_requested, tampilkan MODE BACA UID,
+  kirim hasil ke /device/scan-result, lalu kembali ke mode absensi.
+- LCD I2C 20x4 (0x27, SDA21/SCL22): tampilan default "SMK TELESANDI",
+  tampilan hasil absensi.
+- Buzzer pin 27: bunyi sukses / peringatan / error.
+- Jendela double-tap 3 detik untuk mencegah absen ganda.
+- Penanganan HTTP 201/409/404/401/403/422/429.
+- Parsing JSON manual (ArduinoJson tidak terpasang di
+  D:\Coding\Arduino\libraries).
+
+Pin mengikuti referensi Done_selesai.ino:
+LCD SDA21/SCL22, MFRC522 SS5/RST4/SCK18/MISO19/MOSI23, Buzzer 27.
+Tidak memakai SD card, RTC, atau Ethernet.
+
+
+5. VERIFIKASI INTEGRASI
+------------------------------------------------------------
+- GET  http://127.0.0.1:8000/api/health          -> 200 OK
+- GET  http://192.168.1.5:8000/api/health        -> 200 OK (LAN)
+- POST /api/device/heartbeat (key valid)         -> 200, Online,
+                                                    restart=false,
+                                                    late_time=07:15
+- POST /api/attendance kartu tidak terdaftar     -> 404
+  "Siswa tidak ditemukan atau tidak aktif."
+- Frontend: npm run build OK (dist, index ~433 kB),
+  npm run lint 0 error (9 warning set-state-in-effect di
+  AdminDashboard).
+
+
+6. LAPORAN PROYEK
+------------------------------------------------------------
+- docs\laporan-presen-tech.md   (Bab 1-7 + Lampiran A/B/C)
+- docs\laporan-presen-tech.html (CSS cetak A4, cover, daftar isi,
+  diagram arsitektur & alur SVG)
+- docs\laporan-presen-tech.pdf  (15 halaman, 337 KB, dibuat via
+  Edge headless tanpa header/footer)
+
+Estimasi kelengkapan (tertimbang):
+- Sebelum pekerjaan    : +/- 63%
+- Setelah kode selesai : +/- 86%
+- Setelah UAT          : +/- 92%
+
+
+7. KENDALA
+------------------------------------------------------------
+- Aturan firewall tidak bisa dibuat tanpa hak admin
+  ("Access is denied"). Akses LAN saat ini tetap berjalan.
+- ESP32 terdeteksi di COM19 (CP210x, ESP32-D0WD-V3). Firmware sudah
+  berhasil dikompilasi (987.920 byte, 75% flash), tetapi belum di-upload.
+- ArduinoJson tidak terpasang -> parsing JSON ditulis manual.
+- MySQL harus dijalankan manual via mysqld.exe (tidak auto-start).
+
+
+8. LANGKAH BERIKUTNYA (PERLU TINDAKAN PENGGUNA)
+------------------------------------------------------------
+1) Isi placeholder identitas di laporan: [Nama Penyusun], NIS/NIP,
+   sekolah/kelas.
+2) Jalankan di PowerShell ADMIN agar ESP32 bisa akses API:
+   New-NetFirewallRule -DisplayName "PresenTech API 8000"
+     -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8000
+3) Upload firmware ke ESP32 di COM19:
+   arduino-cli upload -p COM19 --fqbn esp32:esp32:esp32
+     --libraries "D:\Coding\Arduino\libraries"
+     "D:\Coding\Arduino\PresenTech_alat"
+   lalu pantau Serial Monitor 115200 untuk koneksi WiFi dan heartbeat.
+4) Daftarkan kartu uji (UID uppercase) lewat menu RFID Cards.
+5) Jalankan checklist UAT di Lampiran C dan centang hasilnya.
+
+
+9. CATATAN KEAMANAN
+------------------------------------------------------------
+- Device key ESP32-RPL-01 sudah dirotasi dan ditulis ke config.h.
+  Nilainya sengaja TIDAK dicetak di laporan ini.
+- File config.h berisi kredensial asli; jangan di-commit/unggah.
+
+
+10. UPDATE 26 OKTOBER 2026 - FITUR BACA UID DARI WEB
+------------------------------------------------------------
+Tujuan: Admin dapat membaca UID kartu langsung dari alat melalui
+dashboard, tanpa mengetik UID manual.
+
+Alur:
+1) Admin memilih perangkat Online di menu Kartu RFID.
+2) Klik "Baca UID dari Alat" -> modal konfirmasi (Oke/Batal).
+3) Oke -> POST /api/devices/{id}/scan; alat masuk mode baca pada
+   heartbeat berikutnya (maks. +/- 3 detik).
+4) Tap kartu -> alat kirim UID ke POST /api/device/scan-result.
+5) Web polling GET /api/devices/{id}/scan -> UID tampil, lalu modal
+   Oke (pakai UID) / Batal (buang UID).
+6) Sesi berakhir otomatis setelah 60 detik atau saat dibatalkan.
+
+Backend:
+- Migrasi 2026_10_26_101516_add_scan_fields_to_devices_table.php
+  (scan_requested_at, scanned_uid, scanned_at).
+- DeviceController: requestScan, scanStatus, cancelScan, scanResult,
+  hasActiveScanRequest, expireScanSessions.
+- heartbeatByKey: balasan scan_requested + scan_expires_in.
+- routes/api.php:
+  POST   /api/device/scan-result        (device key)
+  POST   /api/devices/{device}/scan     (admin)
+  GET    /api/devices/{device}/scan     (admin)
+  DELETE /api/devices/{device}/scan     (admin)
+- UID dinormalkan (RfidUid), sesi scan 60 detik, hasil disimpan
+  120 detik, status perangkat Offline/Maintenance ditolak 409.
+
+Firmware (versi 1.1.0):
+- Heartbeat 3 detik.
+- State scanMode terpisah dari mode absensi.
+- LCD: MODE BACA UID / TEMPELKAN KARTU / PERINTAH DARI WEB.
+- Setelah tap: UID TERBACA / UID / TERKIRIM KE WEB / ABSENSI AKTIF.
+- Alat kembali ke mode absensi otomatis (tanpa tombol di alat).
+- Batal dari web -> SCAN DIBATALKAN; timeout -> SCAN TIMEOUT.
+- Saat masuk mode scan, medan RF di-reset (antenna off/on) dan gain
+  diatur maksimum agar kartu yang masih HALT ikut terdeteksi.
+- Pembacaan mode scan memakai WUPA (bukan REQA), sehingga kartu
+  yang baru dipakai absensi tetap bisa dibaca tanpa dilepas.
+- Log Serial "Mode scan aktif: menunggu kartu (WUPA)" dan
+  "Scan selesai -> kembali ke mode absensi".
+- WiFi diarahkan ke SSID "Raihan_2.4G" (password tidak dicetak).
+
+Frontend:
+- deviceApi: requestDeviceScan, getDeviceScanStatus, cancelDeviceScan.
+- RfidPage: dropdown perangkat Online, tombol Baca UID, polling 1,5
+  detik, modal Oke/Batal, batalkan sesi; simulasi UID acak dihapus.
+- Pilihan siswa memakai dropdown dengan pencarian (nama/NIS/kelas),
+  dikelompokkan per kelas; hanya siswa Aktif yang bisa dipilih.
+- NIS dan Kelas hanya tampil (readOnly) dan otomatis dari siswa.
+- UID readOnly di mode alat setelah scan; tetap bisa diketik di mode
+  Manual.
+- Tombol Selesai: reset UID/pilihan, bersihkan sesi scan, dan info
+  bahwa alat kembali ke absensi otomatis.
+- Teks mode scan: "Menunggu alat siap..." dan instruksi menunggu
+  LCD MODE BACA UID (±3 detik) sebelum menempelkan kartu.
+- Setelah Daftarkan berhasil, sesi scan dibersihkan di server.
+- ConfirmModal mendukung onCancel untuk membersihkan sesi.
+
+Pengujian:
+- tests/Feature/DeviceScanTest.php: 12 test.
+- Total suite 83 test, 305 assertion, LULUS.
+- Uji API langsung: waiting -> completed (039D7641) -> idle.
+- npm run build berhasil; npm run lint 0 error (9 warning lama).
+- Kompilasi firmware berhasil (75% flash, RAM global 15%).
+- Setelah revisi form: build ulang berhasil, lint 0 error.
+
+Dokumen:
+- laporan-presen-tech.md dan .html diperbarui.
+- PDF baru: laporan-presen-tech-2026-10-26.pdf (17 halaman).
+  PDF lama tidak bisa ditimpa karena sedang dibuka aplikasi lain.
+
+Hasil upload (26 Okt 2026):
+- Upload ke COM19 berhasil (esptool 5.2.0, verify hash OK).
+- Alat reboot, terhubung WiFi "Raihan_2.4G", IP 192.168.1.6.
+- Heartbeat tiap 3 detik, firmware 1.1.0, status Online.
+- Perintah scan dari API diterima alat (scan_requested true pada
+  heartbeat), lalu kembali normal setelah dibatalkan.
+- Catatan: membuka port serial (DTR) membuat ESP32 reset; alat
+  menyambung ulang otomatis dalam beberapa detik.
+- Reflash teks LCD (app-only 0x10000) berhasil, hash verify OK;
+  Serial menampilkan "Scan selesai -> kembali ke mode absensi"
+  setelah sesi dibatalkan. Upload penuh sempat gagal di 67% karena
+  chip berhenti merespons, lalu berhasil dengan menulis app saja.
+- Reflash perbaikan scan (WUPA + reset medan RF, app-only 988.320
+  byte) berhasil, hash verify OK. Serial menampilkan "Mode scan
+  aktif: menunggu kartu (WUPA)" saat perintah scan masuk.
+
+Sisa pekerjaan:
+- Uji tap kartu fisik (mode absensi dan mode baca UID).
+- Daftarkan kartu 039D7641 ke siswa id 7 lewat alur web.
+- Jalankan UAT.

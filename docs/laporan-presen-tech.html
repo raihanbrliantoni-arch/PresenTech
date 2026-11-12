@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Laporan Proyek PresenTech</title>
+<style>
+  :root{
+    --ink:#172033;
+    --muted:#5b6475;
+    --line:#d7dce6;
+    --brand:#0f4c81;
+    --brand-2:#0e7c86;
+    --soft:#f2f6fb;
+    --warn:#9a5b00;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:var(--ink);
+    background:#eef2f7;
+    line-height:1.55;
+    font-size:11pt;
+  }
+  .page{
+    width:210mm;
+    min-height:297mm;
+    margin:0 auto 10mm;
+    padding:18mm 18mm 16mm;
+    background:#fff;
+    box-shadow:0 8px 30px rgba(15,25,50,.12);
+    position:relative;
+  }
+  .cover{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    text-align:center;
+    background:linear-gradient(180deg,#0f4c81 0 42%,#ffffff 42% 100%);
+    color:#fff;
+  }
+  .cover .top{padding-top:18mm}
+  .cover .school{letter-spacing:.22em;font-size:12pt;font-weight:700;text-transform:uppercase}
+  .cover h1{font-size:34pt;line-height:1.1;margin:14mm 0 4mm;color:#fff}
+  .cover h2{font-size:16pt;font-weight:500;margin:0;color:#dbe9f7}
+  .cover .subtitle{margin-top:6mm;font-size:12pt;color:#dbe9f7}
+  .cover .meta{
+    margin:0 12mm 12mm;
+    background:#fff;
+    color:var(--ink);
+    border-radius:10px;
+    padding:10mm 12mm;
+    text-align:left;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+  }
+  .cover .meta table{width:100%;border-collapse:collapse}
+  .cover .meta td{padding:2.2mm 0;border-bottom:1px dashed var(--line);vertical-align:top}
+  .cover .meta td:first-child{width:38%;color:var(--muted)}
+  .cover .meta tr:last-child td{border-bottom:0}
+  .cover .date{margin-top:8mm;color:var(--muted);font-size:10pt}
+  h1,h2,h3{line-height:1.25;color:var(--brand)}
+  h1{font-size:20pt;margin:0 0 6mm;padding-bottom:3mm;border-bottom:2px solid var(--brand)}
+  h2{font-size:14pt;margin:8mm 0 3mm}
+  h3{font-size:12pt;margin:6mm 0 2mm;color:var(--ink)}
+  p{margin:0 0 3.2mm;text-align:justify}
+  ul,ol{margin:0 0 4mm 5mm;padding:0}
+  li{margin:0 0 1.6mm}
+  table{width:100%;border-collapse:collapse;margin:3mm 0 5mm;font-size:9.6pt}
+  th,td{border:1px solid var(--line);padding:2.2mm 2.6mm;vertical-align:top;text-align:left}
+  th{background:var(--soft);color:var(--brand);font-weight:700}
+  tr:nth-child(even) td{background:#fbfcfe}
+  code,pre{font-family:Consolas,"Courier New",monospace}
+  code{background:#eef3f8;padding:.4mm 1.2mm;border-radius:3px;font-size:9.5pt}
+  pre{
+    background:#101a2b;color:#e8eef7;border-radius:8px;padding:4mm 5mm;
+    overflow:auto;font-size:8.8pt;line-height:1.45;margin:3mm 0 5mm;
+  }
+  .note{
+    background:#fff8e8;border-left:4px solid #d99a00;padding:3mm 4mm;
+    margin:3mm 0 5mm;color:#4d3a12;font-size:10pt;
+  }
+  .info{
+    background:#eef8f9;border-left:4px solid var(--brand-2);padding:3mm 4mm;
+    margin:3mm 0 5mm;color:#164c52;font-size:10pt;
+  }
+  .toc{display:grid;grid-template-columns:1fr 1fr;gap:2mm 8mm;font-size:10pt}
+  .toc div{padding:1.6mm 0;border-bottom:1px dotted var(--line)}
+  .caption{font-size:9pt;color:var(--muted);text-align:center;margin:-2mm 0 5mm}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+  .card{border:1px solid var(--line);border-radius:8px;padding:4mm;background:#fbfcfe}
+  .card h3{margin-top:0}
+  .pill{display:inline-block;background:var(--soft);color:var(--brand);border:1px solid #cfe0ee;border-radius:999px;padding:.6mm 2.6mm;font-size:8.6pt;margin:0 1mm 1mm 0}
+  .ok{color:#0c6b3a;font-weight:700}
+  .warn{color:var(--warn);font-weight:700}
+  .mono{font-family:Consolas,monospace;font-size:9pt}
+  .page-break{page-break-before:always}
+  .avoid{page-break-inside:avoid}
+  @page{size:A4;margin:16mm 15mm}
+  @media print{
+    body{background:#fff}
+    .page{width:auto;min-height:auto;margin:0;padding:0;box-shadow:none}
+    .cover{
+      height:265mm;
+      margin:-16mm -15mm 0;
+      padding:18mm 18mm 10mm;
+    }
+    a{color:inherit;text-decoration:none}
+  }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="top">
+    <div class="school">SMK TELESANDI</div>
+    <h1>PRESENTECH</h1>
+    <h2>Sistem Absensi RFID Berbasis Web dan ESP32</h2>
+    <div class="subtitle">Laporan Proyek</div>
+  </div>
+  <div class="meta">
+    <table>
+      <tr><td>Disusun oleh</td><td>[Nama Penyusun]</td></tr>
+      <tr><td>Kelas / Jurusan</td><td>[Kelas / Jurusan]</td></tr>
+      <tr><td>Guru Pembimbing</td><td>[Nama Guru Pembimbing]</td></tr>
+      <tr><td>Tahun Ajaran</td><td>2026/2027</td></tr>
+      <tr><td>Versi Firmware</td><td>1.1.0</td></tr>
+      <tr><td>Tanggal</td><td>26 Oktober 2026</td></tr>
+    </table>
+    <div class="date">Laporan disusun berdasarkan implementasi perangkat lunak dan integrasi API pada 26 Oktober 2026.</div>
+  </div>
+</section>
+
+<section class="page">
+  <h1>Daftar Isi</h1>
+  <div class="toc">
+    <div>Abstrak</div>
+    <div>BAB 1 Pendahuluan</div>
+    <div>BAB 2 Landasan Teori</div>
+    <div>BAB 3 Analisis dan Perancangan</div>
+    <div>BAB 4 Implementasi</div>
+    <div>BAB 5 Pengujian</div>
+    <div>BAB 6 Hasil dan Pembahasan</div>
+    <div>BAB 7 Penutup</div>
+    <div>Lampiran A Checklist Uji Manual</div>
+    <div>Lampiran B Perintah Operasional</div>
+    <div>Lampiran C Catatan Rilis</div>
+  </div>
+
+  <h2>Abstrak</h2>
+  <p>PresenTech adalah sistem absensi sekolah yang menggabungkan aplikasi web Laravel, antarmuka React, dan perangkat absensi RFID berbasis ESP32. Perangkat membaca UID kartu, mengirimkannya ke API menggunakan device key, lalu menampilkan nama siswa, status kehadiran, dan waktu yang ditentukan server. Aplikasi web menyediakan pengelolaan siswa, guru, kelas, jadwal, kartu RFID, perangkat, absensi, koreksi, notifikasi, dan log sistem untuk tiga peran: Admin, Guru, dan Siswa.</p>
+  <p>Pada tahap ini, integrasi perangkat telah diarahkan dari Google Apps Script dan daftar siswa lokal menuju API PresenTech. Backend memiliki 83 pengujian otomatis dengan 305 assertion yang lulus. Firmware baru tersedia di <code>D:\Coding\Arduino\PresenTech_alat</code> dan telah berhasil dikompilasi melalui <code>arduino-cli</code> (75% ruang program), telah di-upload ke board ESP32 dan berjalan dengan heartbeat 3 detik. Form pendaftaran RFID memakai pilihan siswa dengan pencarian; NIS dan kelas tampil otomatis; perangkat kembali ke mode absensi otomatis setelah pembacaan, timeout, atau pembatalan. Fitur baca UID dari dashboard juga telah ditambahkan: Admin memulai mode baca dari web, perangkat masuk mode scan pada heartbeat berikutnya, lalu UID dikirim kembali ke web. Estimasi capaian proyek adalah 90%, dengan UAT penuh sebagai pekerjaan berikutnya.</p>
+  <p><strong>Kata kunci:</strong> absensi, RFID, ESP32, Laravel, React, PresenTech.</p>
+
+  <div class="info">
+    <strong>Ringkasan capaian:</strong> backend dan dashboard web siap digunakan; firmware baru sudah terhubung secara desain ke API; verifikasi board dan UAT masih menjadi langkah berikutnya.
+  </div>
+</section>
+
+<section class="page page-break">
+  <h1>BAB 1 Pendahuluan</h1>
+  <h2>1.1 Latar Belakang</h2>
+  <p>Pencatatan kehadiran manual membutuhkan waktu, mudah salah, dan sulit direkap. Kartu RFID dapat mempercepat identifikasi siswa, tetapi data baru bermanfaat bila langsung masuk ke basis data dan dapat dipantau oleh sekolah. PresenTech menggabungkan kartu RFID, LCD, buzzer, dan jaringan WiFi dengan aplikasi web terpusat.</p>
+
+  <h2>1.2 Tujuan</h2>
+  <ol>
+    <li>Membangun sistem absensi RFID yang terhubung ke basis data sekolah.</li>
+    <li>Menyediakan dashboard Admin, Guru, dan Siswa.</li>
+    <li>Menentukan status Hadir/Terlambat secara konsisten di server.</li>
+    <li>Menyediakan pengelolaan kartu, perangkat, jadwal, dan koreksi absensi.</li>
+    <li>Menyediakan perangkat ESP32 yang mudah dikonfigurasi dan dipantau.</li>
+  </ol>
+
+  <h2>1.3 Batasan</h2>
+  <ul>
+    <li>Firmware menggunakan WiFi 2.4 GHz, bukan Ethernet.</li>
+    <li>Mode offline belum diimplementasikan; tap ditolak saat server tidak terjangkau.</li>
+    <li>Laporan web saat ini berupa ekspor CSV, belum PDF/Excel.</li>
+    <li>Backup basis data dari dashboard belum tersedia.</li>
+    <li>Perintah restart dikirim melalui heartbeat HTTP, belum memakai MQTT.</li>
+    <li>Validasi perangkat keras menyeluruh (tap absensi, LCD, buzzer, restart) masih menunggu UAT.</li>
+  </ul>
+
+  <h2>1.4 Metode Pengerjaan</h2>
+  <p>Pengerjaan dilakukan secara bertahap: analisis kebutuhan, perancangan basis data dan API, implementasi backend dan frontend, pembuatan firmware, pengujian otomatis, lalu integrasi perangkat. Pengujian backend menggunakan PHPUnit dengan basis data SQLite in-memory agar tidak mengganggu data produksi.</p>
+</section>
+
+<section class="page page-break">
+  <h1>BAB 2 Landasan Teori</h1>
+  <h2>2.1 RFID dan MFRC522</h2>
+  <p>MFRC522 membaca UID kartu Mifare pada frekuensi 13,56 MHz melalui SPI. UID adalah identitas kartu yang kemudian dicocokkan dengan tabel <code>rfid_cards</code>. Sistem menormalkan UID menjadi huruf besar tanpa pemisah agar format konsisten.</p>
+
+  <h2>2.2 ESP32</h2>
+  <p>ESP32 menjalankan firmware Arduino dan terhubung ke WiFi. Perangkat ini mengendalikan LCD I2C 20x4, membaca MFRC522, mengaktifkan buzzer, dan mengirim HTTP JSON ke API.</p>
+
+  <h2>2.3 Laravel dan React</h2>
+  <p>Laravel menyediakan API, validasi, autentikasi Sanctum, otorisasi peran, dan basis data MySQL. React menyediakan dashboard web yang memakai API tersebut. Vite digunakan untuk build frontend.</p>
+
+  <h2>2.4 Keamanan Dasar</h2>
+  <ul>
+    <li>Device key dikirim melalui header <code>X-Device-Key</code> dan disimpan sebagai hash SHA-256.</li>
+    <li>Waktu absensi perangkat selalu memakai jam server.</li>
+    <li>Perangkat tidak boleh menentukan status kehadiran sendiri.</li>
+    <li>Perangkat berstatus Maintenance tidak boleh mencatat absensi.</li>
+    <li>Endpoint perangkat dibatasi rate limit.</li>
+  </ul>
+</section>
+
+<section class="page page-break">
+  <h1>BAB 3 Analisis dan Perancangan</h1>
+  <h2>3.1 Kebutuhan Fungsional</h2>
+  <table>
+    <thead><tr><th>Kode</th><th>Kebutuhan</th></tr></thead>
+    <tbody>
+      <tr><td>F-01</td><td>Admin, Guru, dan Siswa dapat login dan logout.</td></tr>
+      <tr><td>F-02</td><td>Admin mengelola siswa, guru, kelas, jadwal, kartu RFID, dan perangkat.</td></tr>
+      <tr><td>F-03</td><td>Perangkat mengirim UID dan menerima nama, status, serta waktu dari server.</td></tr>
+      <tr><td>F-04</td><td>Sistem mencegah satu siswa tercatat dua kali pada tanggal yang sama dari perangkat.</td></tr>
+      <tr><td>F-05</td><td>Guru dan Siswa dapat mengajukan koreksi absensi.</td></tr>
+      <tr><td>F-06</td><td>Admin dapat menyetujui atau menolak koreksi.</td></tr>
+      <tr><td>F-07</td><td>Admin dapat melihat status perangkat dan mengirim perintah restart.</td></tr>
+      <tr><td>F-08</td><td>Sistem mencatat log aktivitas penting.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.2 Peran Pengguna</h2>
+  <table>
+    <thead><tr><th>Peran</th><th>Hak Akses Utama</th></tr></thead>
+    <tbody>
+      <tr><td>Admin</td><td>Seluruh master data, perangkat, absensi, koreksi, pengaturan, log, reset password.</td></tr>
+      <tr><td>Guru</td><td>Dashboard, absensi, koreksi, data siswa, jadwal, laporan.</td></tr>
+      <tr><td>Siswa</td><td>Dashboard, absensi sendiri, koreksi sendiri, jadwal.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.3 Arsitektur Sistem</h2>
+  <div class="avoid">
+    <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="Arsitektur PresenTech">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#0f4c81"/>
+        </marker>
+      </defs>
+      <rect x="20" y="110" width="120" height="70" rx="10" fill="#eef3f8" stroke="#0f4c81"/>
+      <text x="80" y="140" text-anchor="middle" font-size="13" fill="#172033">Kartu RFID</text>
+      <text x="80" y="160" text-anchor="middle" font-size="11" fill="#5b6475">Mifare</text>
+
+      <rect x="180" y="95" width="150" height="100" rx="10" fill="#e7f4f6" stroke="#0e7c86"/>
+      <text x="255" y="125" text-anchor="middle" font-size="13" fill="#172033">ESP32</text>
+      <text x="255" y="145" text-anchor="middle" font-size="10" fill="#5b6475">MFRC522 · LCD · Buzzer</text>
+      <text x="255" y="163" text-anchor="middle" font-size="10" fill="#5b6475">WiFi 2.4 GHz</text>
+
+      <rect x="380" y="80" width="170" height="130" rx="10" fill="#eef3f8" stroke="#0f4c81"/>
+      <text x="465" y="112" text-anchor="middle" font-size="13" fill="#172033">REST API Laravel</text>
+      <text x="465" y="134" text-anchor="middle" font-size="10" fill="#5b6475">Sanctum · Device key</text>
+      <text x="465" y="152" text-anchor="middle" font-size="10" fill="#5b6475">Validasi · Otorisasi</text>
+      <text x="465" y="170" text-anchor="middle" font-size="10" fill="#5b6475">Rate limit</text>
+
+      <rect x="600" y="95" width="140" height="100" rx="10" fill="#fff8e8" stroke="#b77900"/>
+      <text x="670" y="130" text-anchor="middle" font-size="13" fill="#172033">MySQL</text>
+      <text x="670" y="150" text-anchor="middle" font-size="10" fill="#5b6475">Data sekolah</text>
+
+      <rect x="380" y="235" width="170" height="45" rx="10" fill="#fff" stroke="#0f4c81"/>
+      <text x="465" y="263" text-anchor="middle" font-size="12" fill="#172033">Dashboard React</text>
+      <text x="465" y="278" text-anchor="middle" font-size="9" fill="#5b6475">Admin · Guru · Siswa</text>
+
+      <line x1="140" y1="145" x2="176" y2="145" stroke="#0f4c81" stroke-width="2" marker-end="url(#arrow)"/>
+      <line x1="330" y1="145" x2="376" y2="145" stroke="#0f4c81" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="353" y="135" text-anchor="middle" font-size="9" fill="#5b6475">HTTP JSON</text>
+      <line x1="550" y1="145" x2="596" y2="145" stroke="#0f4c81" stroke-width="2" marker-end="url(#arrow)"/>
+      <line x1="465" y1="210" x2="465" y2="231" stroke="#0f4c81" stroke-width="2" marker-end="url(#arrow)"/>
+      <line x1="550" y1="258" x2="596" y2="258" stroke="#0f4c81" stroke-width="2" marker-end="url(#arrow)"/>
+    </svg>
+    <div class="caption">Gambar 3.1 Arsitektur sistem PresenTech.</div>
+  </div>
+
+  <h2>3.4 Kebutuhan Perangkat Keras</h2>
+  <table>
+    <thead><tr><th>Komponen</th><th>Pin ESP32</th><th>Keterangan</th></tr></thead>
+    <tbody>
+      <tr><td>LCD I2C 20x4 (0x27)</td><td>SDA 21, SCL 22</td><td>Menampilkan status dan hasil tap.</td></tr>
+      <tr><td>MFRC522 SDA/SS</td><td>GPIO 5</td><td>Chip select RFID.</td></tr>
+      <tr><td>MFRC522 RST</td><td>GPIO 4</td><td>Reset modul RFID.</td></tr>
+      <tr><td>MFRC522 SCK</td><td>GPIO 18</td><td>SPI clock.</td></tr>
+      <tr><td>MFRC522 MISO</td><td>GPIO 19</td><td>SPI data dari modul.</td></tr>
+      <tr><td>MFRC522 MOSI</td><td>GPIO 23</td><td>SPI data ke modul.</td></tr>
+      <tr><td>Buzzer</td><td>GPIO 27</td><td>Umpan balik suara.</td></tr>
+      <tr><td>Daya</td><td>3,3 V / 5 V sesuai modul</td><td>RFID 3,3 V; LCD umumnya 5 V.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3.5 Rancangan Basis Data</h2>
+  <table>
+    <thead><tr><th>Tabel</th><th>Fungsi</th></tr></thead>
+    <tbody>
+      <tr><td><code>users</code></td><td>Akun login dan peran.</td></tr>
+      <tr><td><code>students</code></td><td>Data siswa dan relasi ke kelas.</td></tr>
+      <tr><td><code>teachers</code></td><td>Data guru.</td></tr>
+      <tr><td><code>school_classes</code></td><td>Data kelas.</td></tr>
+      <tr><td><code>rfid_cards</code></td><td>UID kartu dan pemiliknya.</td></tr>
+      <tr><td><code>devices</code></td><td>Perangkat, device key, status, heartbeat, restart.</td></tr>
+      <tr><td><code>schedules</code></td><td>Jadwal pelajaran dan jam masuk.</td></tr>
+      <tr><td><code>attendances</code></td><td>Catatan kehadiran.</td></tr>
+      <tr><td><code>attendance_corrections</code></td><td>Pengajuan koreksi absensi.</td></tr>
+      <tr><td><code>notifications</code></td><td>Notifikasi pengguna.</td></tr>
+      <tr><td><code>system_logs</code></td><td>Log aktivitas.</td></tr>
+      <tr><td><code>settings</code></td><td>Jam masuk, keterlambatan, MQTT, tahun ajaran.</td></tr>
+    </tbody>
+  </table>
+
+  <p>Relasi utama: <code>students.class_id</code> ke <code>school_classes.id</code>; <code>rfid_cards.student_id</code> ke <code>students.id</code>; <code>attendances.student_id</code> ke <code>students.id</code>; <code>attendances.rfid_card_id</code> ke <code>rfid_cards.id</code>; <code>attendances.device_id</code> ke <code>devices.id</code>; dan <code>attendance_corrections.attendance_id</code> ke <code>attendances.id</code>.</p>
+
+  <h2>3.6 Alur Absensi</h2>
+  <div class="avoid">
+    <svg viewBox="0 0 760 210" width="100%" role="img" aria-label="Alur absensi">
+      <defs>
+        <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#0e7c86"/>
+        </marker>
+      </defs>
+      <g font-size="11" fill="#172033" text-anchor="middle">
+        <rect x="10" y="70" width="105" height="55" rx="8" fill="#eef3f8" stroke="#0f4c81"/><text x="62" y="94">Tap kartu</text><text x="62" y="110" font-size="9" fill="#5b6475">UID uppercase</text>
+        <rect x="135" y="70" width="120" height="55" rx="8" fill="#e7f4f6" stroke="#0e7c86"/><text x="195" y="94">POST absensi</text><text x="195" y="110" font-size="9" fill="#5b6475">device key</text>
+        <rect x="275" y="70" width="130" height="55" rx="8" fill="#eef3f8" stroke="#0f4c81"/><text x="340" y="94">Validasi server</text><text x="340" y="110" font-size="9" fill="#5b6475">kartu + siswa</text>
+        <rect x="425" y="70" width="120" height="55" rx="8" fill="#eef3f8" stroke="#0f4c81"/><text x="485" y="94">Cek duplikat</text><text x="485" y="110" font-size="9" fill="#5b6475">1 per hari</text>
+        <rect x="565" y="70" width="120" height="55" rx="8" fill="#fff8e8" stroke="#b77900"/><text x="625" y="94">Simpan</text><text x="625" y="110" font-size="9" fill="#5b6475">status server</text>
+        <rect x="315" y="160" width="130" height="40" rx="8" fill="#fff" stroke="#0f4c81"/><text x="380" y="185">LCD + buzzer</text>
+      </g>
+      <g stroke="#0e7c86" stroke-width="2" fill="none" marker-end="url(#arrow2)">
+        <line x1="115" y1="97" x2="131" y2="97"/><line x1="255" y1="97" x2="271" y2="97"/>
+        <line x1="405" y1="97" x2="421" y2="97"/><line x1="545" y1="97" x2="561" y2="97"/>
+        <line x1="625" y1="125" x2="625" y2="180"/><line x1="625" y1="180" x2="449" y2="180"/>
+      </g>
+    </svg>
+    <div class="caption">Gambar 3.2 Alur tap kartu sampai hasil ditampilkan.</div>
+  </div>
+</section>
+
+<section class="page page-break">
+  <h1>BAB 4 Implementasi</h1>
+  <h2>4.1 Backend</h2>
+  <p>Backend menggunakan Laravel 13, PHP 8.3, MySQL, dan Sanctum. Endpoint utama:</p>
+  <table>
+    <thead><tr><th>Metode</th><th>Endpoint</th><th>Akses</th><th>Fungsi</th></tr></thead>
+    <tbody>
+      <tr><td>POST</td><td><code>/api/login</code></td><td>Publik</td><td>Login dengan identifier dan password.</td></tr>
+      <tr><td>GET</td><td><code>/api/health</code></td><td>Publik</td><td>Cek layanan.</td></tr>
+      <tr><td>POST</td><td><code>/api/attendance</code></td><td>Device key / Admin / Guru</td><td>Catat absensi.</td></tr>
+      <tr><td>POST</td><td><code>/api/device/heartbeat</code></td><td>Device key</td><td>Heartbeat perangkat.</td></tr>
+      <tr><td>POST</td><td><code>/api/device/restart-ack</code></td><td>Device key</td><td>Konfirmasi restart.</td></tr>
+      <tr><td>POST</td><td><code>/api/device/scan-result</code></td><td>Device key</td><td>Kirim UID hasil mode baca.</td></tr>
+      <tr><td>POST</td><td><code>/api/devices/{device}/scan</code></td><td>Admin</td><td>Mulai mode baca UID.</td></tr>
+      <tr><td>GET</td><td><code>/api/devices/{device}/scan</code></td><td>Admin</td><td>Polling status/hasil baca UID.</td></tr>
+      <tr><td>DELETE</td><td><code>/api/devices/{device}/scan</code></td><td>Admin</td><td>Batalkan mode baca UID.</td></tr>
+      <tr><td>POST</td><td><code>/api/devices/{device}/restart</code></td><td>Admin</td><td>Minta restart perangkat.</td></tr>
+      <tr><td>GET</td><td><code>/api/attendance</code></td><td>Login</td><td>Daftar absensi.</td></tr>
+      <tr><td>POST</td><td><code>/api/attendance-corrections</code></td><td>Login</td><td>Ajukan koreksi.</td></tr>
+      <tr><td>PUT</td><td><code>/api/attendance-corrections/{id}</code></td><td>Admin</td><td>Setujui/tolak koreksi.</td></tr>
+      <tr><td>GET</td><td><code>/api/rfid-cards</code></td><td>Admin</td><td>Daftar kartu RFID.</td></tr>
+      <tr><td>GET</td><td><code>/api/devices</code></td><td>Admin</td><td>Daftar perangkat.</td></tr>
+    </tbody>
+  </table>
+
+  <p>Perubahan integrasi perangkat pada tahap ini:</p>
+  <ul>
+    <li>Migrasi <code>restart_requested_at</code> pada tabel <code>devices</code>.</li>
+    <li>Heartbeat khusus device key tanpa memerlukan ID numerik.</li>
+    <li>Perintah restart dibaca perangkat pada heartbeat, lalu dikonfirmasi dengan ack.</li>
+    <li>Sesi baca UID: dashboard meminta scan, perangkat masuk mode baca, hasil UID dikirim ke web.</li>
+    <li>Sesi scan kedaluwarsa 60 detik dan dapat dibatalkan dari dashboard.</li>
+    <li>Normalisasi UID di absensi dan pengelolaan kartu.</li>
+    <li>Command <code>devices:mark-offline</code> untuk menandai perangkat yang tidak heartbeat.</li>
+    <li>Status Maintenance dipertahankan meskipun perangkat mengirim heartbeat.</li>
+  </ul>
+
+  <h3>Contoh heartbeat</h3>
+  <pre>POST /api/device/heartbeat
+X-Device-Key: ptd_...
+Content-Type: application/json
+
+{"firmware_version":"1.1.0","ip_address":"192.168.1.50"}</pre>
+  <pre>{
+  "message": "Heartbeat diterima.",
+  "device": {"status": "Online", "last_seen_at": "..."},
+  "server_time": "2026-10-25T23:23:09+07:00",
+  "late_time": "07:15",
+  "restart_requested": false,
+  "scan_requested": false,
+  "scan_expires_in": 0
+}</pre>
+
+  <h3>Alur baca UID dari web</h3>
+  <ol>
+    <li>Admin menekan <strong>Baca UID dari Alat</strong> pada menu Kartu RFID.</li>
+    <li>Web mengirim <code>POST /api/devices/{id}/scan</code>; server menandai <code>scan_requested_at</code>.</li>
+    <li>Perangkat melihat <code>scan_requested: true</code> pada heartbeat berikutnya (interval 3 detik) dan menampilkan <strong>MODE BACA UID</strong>.</li>
+    <li>Kartu ditempelkan; perangkat mengirim <code>POST /api/device/scan-result</code> berisi UID.</li>
+    <li>Web yang melakukan polling <code>GET /api/devices/{id}/scan</code> menerima status <code>completed</code> dan UID, lalu menawarkan <strong>Oke/Batal</strong>.</li>
+    <li>Sesi berakhir otomatis setelah 60 detik atau saat Admin menekan Batal.</li>
+  </ol>
+
+  <h2>4.2 Frontend</h2>
+  <ul>
+    <li>Landing page, login, dan alur lupa password.</li>
+    <li>Dashboard Admin dengan 14 menu: dashboard, absensi, siswa, guru, kelas, jadwal, perangkat, monitoring, RFID, log, laporan, pengaturan, koreksi, reset password.</li>
+    <li>Dashboard Guru: dashboard, absensi, koreksi, siswa, jadwal, laporan.</li>
+    <li>Dashboard Siswa: dashboard, absensi, koreksi, jadwal.</li>
+    <li>Koreksi absensi dengan pemilihan data absensi dan pembatalan pengajuan oleh siswa.</li>
+    <li>Ekspor laporan CSV berdasarkan rentang tanggal.</li>
+    <li>Mode <strong>Dari Alat RFID</strong> yang nyata: pilih perangkat Online, tekan <strong>Baca UID dari Alat</strong>, konfirmasi Oke/Batal sebelum dan sesudah pembacaan, lalu UID otomatis mengisi form pendaftaran.</li>
+    <li>Nama siswa dipilih dari dropdown dengan pencarian (nama/NIS/kelas), bukan diketik bebas; NIS dan kelas tampil otomatis dan tidak dapat diubah.</li>
+    <li>UID terkunci di mode alat, tombol <strong>Selesai</strong> membersihkan sesi, dan perangkat kembali ke mode absensi otomatis.</li>
+  </ul>
+
+  <h2>4.3 Firmware</h2>
+  <p>Firmware baru berada di <code>D:\Coding\Arduino\PresenTech_alat</code>:</p>
+  <pre>PresenTech_alat.ino
+config.h
+config.example.h</pre>
+  <ol>
+    <li>Inisialisasi LCD, SPI, MFRC522, dan buzzer.</li>
+    <li>Menghubungkan WiFi dengan timeout dan reconnect otomatis.</li>
+    <li>Mengirim heartbeat setiap 3 detik agar perintah dari web cepat diterima.</li>
+    <li>Membaca UID kartu dan menormalkannya menjadi uppercase 2 digit hex.</li>
+    <li>Mengirim <code>{"uid":"..."}</code> ke <code>/api/attendance</code> dengan device key.</li>
+    <li>Menampilkan hasil dari server pada LCD dan membunyikan buzzer.</li>
+    <li>Jika heartbeat meminta restart, firmware mengirim ack lalu restart.</li>
+    <li>Jika heartbeat meminta scan, firmware mereset medan RF, membangunkan kartu dengan WUPA (termasuk kartu yang masih HALT setelah absensi), mengirim hasil ke <code>/api/device/scan-result</code>, lalu kembali ke mode absensi.</li>
+  </ol>
+
+  <table>
+    <thead><tr><th>Kondisi</th><th>Tampilan LCD</th></tr></thead>
+    <tbody>
+      <tr><td>Siaga</td><td>SMK TELESANDI / PRESENTECH / IP / TAP KARTU</td></tr>
+      <tr><td>Berhasil</td><td>ABSENSI BERHASIL / nama / kelas / status + jam</td></tr>
+      <tr><td>Duplikat</td><td>SUDAH ABSEN / nama / JAM / TIDAK DICATAT ULANG</td></tr>
+      <tr><td>Kartu tidak terdaftar</td><td>KARTU / TIDAK TERDAFTAR / DAFTARKAN DI WEB</td></tr>
+      <tr><td>Device key salah</td><td>DEVICE KEY SALAH / PERIKSA CONFIG.H</td></tr>
+      <tr><td>Maintenance</td><td>ALAT MAINTENANCE / ABSEN DITOLAK</td></tr>
+      <tr><td>Mode baca UID</td><td>MODE BACA UID / TEMPELKAN KARTU / PERINTAH DARI WEB</td></tr>
+      <tr><td>UID terkirim</td><td>UID TERBACA / UID / TERKIRIM KE WEB / ABSENSI AKTIF</td></tr>
+      <tr><td>Scan dibatalkan</td><td>SCAN DIBATALKAN / KEMBALI KE MODE ABSENSI</td></tr>
+      <tr><td>Scan kedaluwarsa</td><td>SCAN TIMEOUT / TIDAK ADA KARTU / KEMBALI KE ABSENSI / ULANGI DARI WEB</td></tr>
+      <tr><td>Server/WiFi mati</td><td>SERVER OFFLINE / TIDAK ADA KONEKSI</td></tr>
+    </tbody>
+  </table>
+
+  <p>Konfigurasi rahasia tidak ditulis di laporan. Nilai sebenarnya berada di <code>config.h</code>:</p>
+  <pre>#define WIFI_SSID "..."
+#define WIFI_PASSWORD "..."
+#define API_BASE_URL "http://192.168.1.5:8000/api"
+#define DEVICE_KEY "ptd_..."
+#define FIRMWARE_VERSION "1.1.0"</pre>
+
+  <h2>4.4 Keamanan dan Konsistensi Data</h2>
+  <ul>
+    <li>UID dinormalkan sebelum pencarian, sehingga <code>a1:b2:c3:d4</code> cocok dengan <code>A1B2C3D4</code>.</li>
+    <li>Perangkat tidak dapat menentukan tanggal, jam, atau status palsu.</li>
+    <li>Satu siswa hanya dicatat sekali per tanggal dari perangkat.</li>
+    <li>Device key disimpan sebagai hash dan hanya ditampilkan sekali saat dibuat/dirotasi.</li>
+    <li>Perangkat Maintenance tidak dapat mencatat absensi.</li>
+    <li>Rate limit melindungi login dan endpoint perangkat.</li>
+    <li>Waktu server memakai zona Asia/Jakarta sesuai pengaturan aplikasi.</li>
+  </ul>
+</section>
+
+<section class="page page-break">
+  <h1>BAB 5 Pengujian</h1>
+  <h2>5.1 Pengujian Otomatis Backend</h2>
+  <pre>php artisan test --compact</pre>
+  <div class="info"><strong>Hasil:</strong> 83 tests, 305 assertions, passed.</div>
+  <p>Cakupan baru:</p>
+  <ul>
+    <li>Heartbeat dengan device key valid, tanpa key, dan key salah.</li>
+    <li>Perangkat Maintenance tetap Maintenance setelah heartbeat.</li>
+    <li>Perintah restart dilaporkan pada heartbeat dan dihapus setelah ack.</li>
+    <li>Command penandaan perangkat offline.</li>
+    <li>Sesi baca UID: permintaan Admin, flag pada heartbeat, hasil UID ternormalisasi, batal, kedaluwarsa, dan penolakan perangkat Offline/Maintenance.</li>
+    <li>Normalisasi UID pada unit test, absensi, pendaftaran kartu, dan filter kartu.</li>
+    <li>Regresi absensi perangkat dan koreksi.</li>
+  </ul>
+
+  <h2>5.2 Pengujian Frontend</h2>
+  <table>
+    <thead><tr><th>Perintah</th><th>Hasil</th></tr></thead>
+    <tbody>
+      <tr><td><code>npm run build</code></td><td class="ok">Berhasil, dist terbentuk.</td></tr>
+      <tr><td><code>npm run lint</code></td><td><span class="ok">0 error</span>, <span class="warn">9 warning</span> set-state-in-effect pada AdminDashboard.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>5.3 Pengujian Integrasi API</h2>
+  <ul>
+    <li><code>GET /api/health</code> dari alamat LAN <code>http://192.168.1.5:8000/api/health</code> berhasil.</li>
+    <li>Heartbeat dengan device key berhasil dan status perangkat menjadi Online.</li>
+    <li>Absensi dengan UID tidak terdaftar mengembalikan 404 tanpa membuat data.</li>
+    <li>Server dijalankan dengan <code>--host=0.0.0.0</code> agar dapat diakses perangkat.</li>
+    <li>Uji alur scan end-to-end via API: permintaan <code>waiting</code> → hasil <code>039D7641</code> → polling <code>completed</code> → batal <code>idle</code>.</li>
+    <li>Firmware berhasil dikompilasi dengan <code>arduino-cli</code> untuk FQBN <code>esp32:esp32:esp32</code> (988.172 byte, 75% flash; RAM global 15%) dan di-upload ke board COM19 dengan hash terverifikasi.</li>
+  </ul>
+
+  <h2>5.4 Pengujian yang Belum Dilakukan</h2>
+  <ul>
+    <li>UAT tap kartu absensi dan verifikasi LCD/buzzer.</li>
+    <li>UAT pendaftaran kartu lewat dropdown siswa di dashboard.</li>
+    <li>Uji restart dari dashboard ke perangkat fisik.</li>
+    <li>Uji dari perangkat lain di jaringan sekolah (firewall Windows perlu diizinkan).</li>
+    <li>Jalankan checklist UAT penuh di Lampiran C.</li>
+  </ul>
+</section>
+
+<section class="page page-break">
+  <h1>BAB 6 Hasil dan Pembahasan</h1>
+  <h2>6.1 Capaian</h2>
+  <table>
+    <thead><tr><th>Komponen</th><th>Bobot</th><th>Sebelum</th><th>Setelah pekerjaan ini</th><th>Setelah UAT</th></tr></thead>
+    <tbody>
+      <tr><td>Backend/API</td><td>25%</td><td>90%</td><td>98%</td><td>98%</td></tr>
+      <tr><td>Frontend web</td><td>25%</td><td>85%</td><td>90%</td><td>93%</td></tr>
+      <tr><td>Firmware</td><td>20%</td><td>70%</td><td>88%</td><td>96%</td></tr>
+      <tr><td>Integrasi alat–web</td><td>20%</td><td>10%</td><td>75%</td><td>96%</td></tr>
+      <tr><td>Dokumentasi</td><td>10%</td><td>30%</td><td>100%</td><td>100%</td></tr>
+      <tr><td><strong>Total estimasi</strong></td><td></td><td><strong>±63%</strong></td><td><strong>±90%</strong></td><td><strong>±96%</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="note">Angka ini adalah estimasi berbobot untuk keperluan laporan, bukan hasil UAT formal. Firmware sudah dikompilasi dan API sudah diuji (termasuk alur scan), tetapi board belum di-flash.</div>
+
+  <h2>6.2 Kelebihan</h2>
+  <ul>
+    <li>Server menjadi sumber kebenaran untuk identitas, waktu, dan status.</li>
+    <li>Firmware lebih sederhana karena tidak lagi menyimpan daftar siswa.</li>
+    <li>Perangkat dapat dipantau dan di-restart dari dashboard.</li>
+    <li>UID dapat dibaca langsung dari alat melalui dashboard, tanpa mengetik manual.</li>
+    <li>UID tidak lagi sensitif terhadap huruf besar/kecil dan pemisah.</li>
+    <li>Pengujian backend mencakup alur perangkat, scan UID, dan koreksi.</li>
+  </ul>
+
+  <h2>6.3 Keterbatasan</h2>
+  <ul>
+    <li>Tidak ada antrean offline; jika server mati, tap tidak tercatat.</li>
+    <li>Belum ada backup/restore basis data dari dashboard.</li>
+    <li>Laporan hanya CSV.</li>
+    <li>MQTT belum diimplementasikan.</li>
+    <li>UAT perangkat keras menyeluruh belum selesai.</li>
+    <li>Mode baca UID memakai polling heartbeat 3 detik, bukan push real-time.</li>
+    <li>Konfirmasi Oke/Batal hanya ada di web; alat tidak memiliki tombol fisik.</li>
+    <li>Firewall Windows perlu diizinkan secara manual untuk akses dari perangkat lain.</li>
+  </ul>
+
+  <h2>6.4 Rencana Pengembangan</h2>
+  <ol>
+    <li>Kompilasi dan flash firmware ke board.</li>
+    <li>Uji kartu asli, duplikat, kartu tidak terdaftar, dan maintenance.</li>
+    <li>Tambahkan antrean offline menggunakan Preferences/LittleFS.</li>
+    <li>Tambahkan laporan PDF/Excel dan backup basis data.</li>
+    <li>Implementasikan MQTT untuk monitoring dan restart yang lebih real-time.</li>
+    <li>Lakukan UAT dengan Admin, Guru, dan Siswa.</li>
+  </ol>
+</section>
+
+<section class="page page-break">
+  <h1>BAB 7 Penutup</h1>
+  <h2>7.1 Kesimpulan</h2>
+  <p>PresenTech telah memiliki aplikasi web, API, dan firmware yang saling terhubung secara desain. Backend teruji dengan 83 tes otomatis, frontend berhasil dibangun, dan firmware baru sudah menggunakan API PresenTech, bukan Google Apps Script. Fitur baca UID dari dashboard juga sudah tersedia, diuji melalui API, dan firmware telah di-upload ke board. Pekerjaan yang tersisa berpusat pada UAT perangkat keras menyeluruh.</p>
+
+  <h2>7.2 Saran</h2>
+  <p>Lakukan pengujian di board sebelum presentasi, gunakan kartu yang UID-nya sudah didaftarkan, dan pastikan komputer server serta ESP32 berada pada jaringan WiFi yang sama. Untuk produksi, gunakan HTTPS dan pisahkan kredensial dari kode yang dibagikan.</p>
+
+  <h1>Lampiran A — Checklist Uji Manual</h1>
+  <ul>
+    <li>Backend dapat dibuka dari HP: <code>http://192.168.1.5:8000/api/health</code>.</li>
+    <li>Perangkat muncul Online di dashboard setelah heartbeat.</li>
+    <li>Kartu terdaftar menampilkan nama, kelas, status, dan jam.</li>
+    <li>Tap kartu yang sama menampilkan SUDAH ABSEN.</li>
+    <li>Kartu tidak terdaftar menampilkan KARTU TIDAK TERDAFTAR.</li>
+    <li>Perangkat Maintenance menampilkan ALAT MAINTENANCE.</li>
+    <li>Menu Kartu RFID → Baca UID dari Alat → konfirmasi Oke menampilkan MODE BACA UID di alat.</li>
+    <li>Tap kartu pada mode scan mengisi UID di form pendaftaran setelah konfirmasi Oke.</li>
+    <li>Batal pada konfirmasi mengembalikan alat ke mode absensi dan mengosongkan UID.</li>
+    <li>Nama siswa dipilih lewat dropdown pencarian; NIS dan kelas terisi otomatis serta tidak dapat diubah.</li>
+    <li>Tombol Selesai mengosongkan form dan alat tetap kembali ke mode absensi.</li>
+    <li>Mode scan berakhir otomatis setelah 60 detik.</li>
+    <li>Tombol restart membuat perangkat restart setelah heartbeat.</li>
+    <li>WiFi dimatikan menampilkan WIFI OFFLINE / SERVER OFFLINE.</li>
+    <li>Data absensi muncul di dashboard Admin/Guru/Siswa.</li>
+  </ul>
+
+  <h1>Lampiran B — Perintah Operasional</h1>
+  <pre>cd C:\laragon\www\pkk\PresenTech-Backend
+php artisan serve --host=0.0.0.0 --port=8000
+php artisan test --compact
+php artisan devices:mark-offline</pre>
+  <p>Firewall Windows (jalankan PowerShell sebagai Administrator):</p>
+  <pre>New-NetFirewallRule -DisplayName "PresenTech API 8000" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8000</pre>
+
+  <h1>Lampiran C — Catatan Rilis</h1>
+  <table>
+    <tbody>
+      <tr><th>Tanggal</th><td>26 Oktober 2026</td></tr>
+      <tr><th>Versi firmware</th><td>1.1.0 (mode baca UID + heartbeat 3 detik)</td></tr>
+      <tr><th>Perangkat contoh</th><td><code>ESP32-RPL-01</code></td></tr>
+      <tr><th>API lokal</th><td><code>http://192.168.1.5:8000/api</code></td></tr>
+      <tr><th>Firmware</th><td><code>D:\Coding\Arduino\PresenTech_alat</code></td></tr>
+      <tr><th>Laporan</th><td><code>C:\laragon\www\pkk\docs</code></td></tr>
+    </tbody>
+  </table>
+</section>
+
+</body>
+</html>
