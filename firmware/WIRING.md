@@ -24,63 +24,18 @@ nilai bawaan `firmware/PresentechAlat/config.example.h`. Kalau kamu mengubah pin
 
 ## 2. Diagram sambungan
 
-```mermaid
-graph LR
-  subgraph ESP32["ESP32 DevKit V1 (logika 3.3V)"]
-    V33["3V3"]
-    VIN["VIN / 5V"]
-    GND["GND"]
-    G5["GPIO5"]
-    G4["GPIO4"]
-    G18["GPIO18"]
-    G19["GPIO19"]
-    G23["GPIO23"]
-    G21["GPIO21"]
-    G22["GPIO22"]
-    G27["GPIO27"]
-    G0["GPIO0 (BOOT)"]
-  end
-
-  subgraph RFID["MFRC522"]
-    R_3V["3.3V"]
-    R_GND["GND"]
-    R_SS["SDA / SS"]
-    R_SCK["SCK"]
-    R_MOSI["MOSI"]
-    R_MISO["MISO"]
-    R_RST["RST"]
-  end
-
-  subgraph LCD["LCD 2004 + I2C"]
-    L_VCC["VCC"]
-    L_GND["GND"]
-    L_SDA["SDA"]
-    L_SCL["SCL"]
-  end
-
-  BZ["Buzzer aktif (+)"]
-  BTN["Tombol ke GND (opsional)"]
-
-  V33 --- R_3V
-  GND --- R_GND
-  G5 --- R_SS
-  G18 --- R_SCK
-  G23 --- R_MOSI
-  G19 --- R_MISO
-  G4 --- R_RST
-
-  VIN --- L_VCC
-  GND --- L_GND
-  G21 --- L_SDA
-  G22 --- L_SCL
-
-  G27 --- BZ
-  G0 --- BTN
+```html
+<p align="center">
+  <a href="wiring/presentech-wiring.svg">
+    <img src="wiring/presentech-wiring.png" width="960"
+         alt="Diagram wiring PresenTech: ESP32, MFRC522, LCD I2C 20x4, dan buzzer">
+  </a>
+</p>
 ```
 
-Catatan: diagram di atas menggambar sambungan I2C **langsung**. Untuk pemakaian
-jangka panjang, pembaca bagian 4 dianjurkan memakai level shifter antara LCD 5V dan
-ESP32.
+Warna kabel pada gambar **hanya saran** agar mudah ditelusuri; yang wajib cocok adalah
+**label GPIO** dan **tegangannya** (MFRC522 3,3 V, LCD 5 V). Titik hitam menandakan
+sambungan GND yang menyatu. Klik gambar untuk membuka versi SVG (bisa di-zoom tanpa pecah).
 
 ### Tampak pin ESP32 (board 30 pin)
 
@@ -116,9 +71,9 @@ nomor urut di gambar.
 
 | Pin modul | Pin ESP32 | Warna saran | Keterangan |
 |---|---|---|---|
-| SDA / SS | **GPIO5** | oranye | Chip select, aktif LOW. |
-| SCK | **GPIO18** | kuning | SPI clock. |
-| MOSI | **GPIO23** | hijau | Data ESP32 → modul. |
+| SDA / SS | **GPIO5** | kuning | Chip select, aktif LOW. |
+| SCK | **GPIO18** | hijau | SPI clock. |
+| MOSI | **GPIO23** | biru muda | Data ESP32 → modul. |
 | MISO | **GPIO19** | biru | Data modul → ESP32. |
 | IRQ | — | — | Tidak dipakai firmware. |
 | GND | **GND** | hitam | Ground bersama. |
@@ -130,16 +85,16 @@ nomor urut di gambar.
 | Pin modul | Pin ESP32 | Warna saran | Keterangan |
 |---|---|---|---|
 | GND | **GND** | hitam | Ground bersama. |
-| VCC | **VIN / 5V** | merah | Backlight butuh 5V. |
-| SDA | **GPIO21** | biru | I2C data (butuh level shifter bila VCC 5V). |
-| SCL | **GPIO22** | kuning | I2C clock (idem). |
+| VCC | **VIN / 5V** | oranye | Backlight butuh 5V. |
+| SDA | **GPIO21** | merah muda | I2C data (butuh level shifter bila VCC 5V). |
+| SCL | **GPIO22** | hijau toska | I2C clock (idem). |
 
 ### Buzzer & tombol
 
-| Komponen | Pin ESP32 | Keterangan |
-|---|---|---|
-| Buzzer aktif `+` | **GPIO27** | `BUZZER_ACTIVE 1` di `config.h`. |
-| Buzzer aktif `−` | GND | Buzzer pasif: pakai `tone()`, set `BUZZER_ACTIVE 0`. |
+| Komponen | Pin ESP32 | Warna saran | Keterangan |
+|---|---|---|---|
+| Buzzer aktif `+` | **GPIO27** | hijau zaitun | `BUZZER_ACTIVE 1` di `config.h`. |
+| Buzzer aktif `−` | GND | hitam | Buzzer pasif: pakai `tone()`, set `BUZZER_ACTIVE 0`. |
 | Tombol BOOT | **GPIO0 → GND** | Sudah ada di board; `INPUT_PULLUP` internal. |
 | LED status | **GPIO2** | LED bawaan board (aktif HIGH). |
 
@@ -245,3 +200,20 @@ buzzer (+) ── 5V
 
 Wiring ini sudah dipakai firmware di repo ini; kalau pin diubah, ubah `config.h`
 dan tabel di dokumen ini sekaligus.
+
+---
+
+## 8. Mengubah diagram
+
+Sumber gambar ada di [`wiring/presentech-wiring.svg`](wiring/presentech-wiring.svg).
+Setelah mengedit SVG, render ulang PNG-nya agar preview di GitHub ikut berubah:
+
+```powershell
+# dari folder firmware/wiring
+& "C:\Program Files\Google\Chrome\Application\chrome.exe" `
+  --headless=new --disable-gpu --hide-scrollbars `
+  --force-device-scale-factor=2 --window-size=1200,880 `
+  --screenshot=presentech-wiring.png presentech-wiring.svg
+```
+
+PNG dibuat 2x (2400×1760) supaya tetap tajam di layar Retina/HP.

@@ -82,6 +82,13 @@ Kartu RFID → MFRC522 → ESP32 (WiFi)
 Firmware siap pakai ada di [`firmware/PresentechAlat`](firmware/PresentechAlat).
 Skema pin lengkap dan catatan daya: **[`firmware/WIRING.md`](firmware/WIRING.md)**.
 
+<p align="center">
+  <a href="firmware/wiring/presentech-wiring.svg">
+    <img src="firmware/wiring/presentech-wiring.png" width="820"
+         alt="Diagram wiring PresenTech: ESP32, MFRC522, LCD I2C 20x4, dan buzzer">
+  </a>
+</p>
+
 | Komponen | Pin ESP32 |
 |---|---|
 | MFRC522 SDA/SS / RST | GPIO5 / GPIO4 |

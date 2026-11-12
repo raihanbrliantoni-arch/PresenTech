@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="880" viewBox="0 0 1200 880" role="img" font-family="Segoe UI, Inter, Arial, sans-serif" text-rendering="geometricPrecision">
+  <!--
+    Diagram wiring PresenTech — sumber: firmware/PresentechAlat/config.example.h
+    Cara render PNG ada di firmware/WIRING.md bagian "Mengubah diagram".
+  -->
+  <title>Wiring alat PresenTech: ESP32, MFRC522, LCD I2C 20x4, dan buzzer</title>
+
+  <rect width="1200" height="880" fill="#ffffff"/>
+
+  <!-- ================= HEADER ================= -->
+  <text x="48" y="58" font-size="26" font-weight="700" fill="#0f172a">Wiring Alat PresenTech (ESP32)</text>
+  <text x="48" y="84" font-size="13.5" fill="#64748b">MFRC522 (SPI) · LCD I2C 20x4 · buzzer aktif · pin sama dengan config.example.h</text>
+
+  <g font-size="11.5" fill="#475569">
+    <line x1="846" y1="52" x2="876" y2="52" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+    <text x="884" y="56">3,3 V</text>
+    <line x1="934" y1="52" x2="964" y2="52" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+    <text x="972" y="56">5 V</text>
+    <line x1="1008" y1="52" x2="1038" y2="52" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+    <text x="1046" y="56">GND</text>
+    <line x1="846" y1="76" x2="876" y2="76" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+    <text x="884" y="80">data — warna = saran</text>
+  </g>
+
+  <!-- ================= WIRES (di belakang kartu) ================= -->
+  <g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- MFRC522 -> ESP32 -->
+    <path d="M352 270 H414" stroke="#eab308"/>
+    <path d="M352 310 H414" stroke="#16a34a"/>
+    <path d="M352 350 H414" stroke="#0ea5e9"/>
+    <path d="M352 390 H414" stroke="#2563eb"/>
+    <path d="M352 430 H414" stroke="#9333ea"/>
+    <path d="M352 480 H414" stroke="#dc2626"/>
+    <path d="M352 520 H414" stroke="#111827"/>
+
+    <!-- ESP32 -> LCD -->
+    <path d="M786 270 H836" stroke="#db2777"/>
+    <path d="M786 310 H836" stroke="#0d9488"/>
+    <path d="M786 350 H836" stroke="#ea580c"/>
+    <path d="M786 390 H836" stroke="#111827"/>
+
+    <!-- Buzzer -> ESP32 / GND -->
+    <path d="M836 605 H816 V390" stroke="#111827"/>
+    <path d="M836 645 H800 V440 H786" stroke="#65a30d"/>
+  </g>
+
+  <!-- titik sambungan GND buzzer -->
+  <circle cx="816" cy="390" r="5" fill="#111827"/>
+
+  <text x="383" y="252" font-size="11" fill="#94a3b8" text-anchor="middle">SPI</text>
+  <text x="811" y="252" font-size="11" fill="#94a3b8" text-anchor="middle">I2C</text>
+
+  <!-- ================= KARTU MFRC522 ================= -->
+  <rect x="54" y="155" width="300" height="400" rx="16" fill="#e8edf4"/>
+  <rect x="52" y="150" width="300" height="400" rx="16" fill="#ffffff" stroke="#dbe4ee" stroke-width="1.5"/>
+  <rect x="68" y="150" width="268" height="5" rx="2.5" fill="#0ea5e9"/>
+
+  <text x="76" y="191" font-size="19" font-weight="700" fill="#0f172a">MFRC522</text>
+  <text x="76" y="213" font-size="12" fill="#64748b">Reader RFID 13,56 MHz</text>
+  <g stroke="#0ea5e9" fill="none" stroke-width="2" opacity="0.55">
+    <path d="M316 186 a14 14 0 0 1 0 28"/>
+    <path d="M309 179 a23 23 0 0 1 0 42"/>
+  </g>
+  <circle cx="324" cy="200" r="3" fill="#0ea5e9"/>
+
+  <g font-size="11" fill="#94a3b8">
+    <text x="76" y="274">chip select</text>
+    <text x="76" y="314">clock</text>
+    <text x="76" y="354">data →</text>
+    <text x="76" y="394">data ←</text>
+    <text x="76" y="434">reset</text>
+    <text x="76" y="484">daya</text>
+    <text x="76" y="524">ground</text>
+  </g>
+  <g font-size="13" fill="#334155" text-anchor="end">
+    <text x="326" y="274">SDA/SS</text>
+    <text x="326" y="314">SCK</text>
+    <text x="326" y="354">MOSI</text>
+    <text x="326" y="394">MISO</text>
+    <text x="326" y="434">RST</text>
+    <text x="326" y="484">3.3V</text>
+    <text x="326" y="524">GND</text>
+  </g>
+  <rect x="336" y="263" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="336" y="303" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="336" y="343" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="336" y="383" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="336" y="423" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="336" y="473" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="336" y="513" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <text x="76" y="542" font-size="10.5" fill="#94a3b8">IRQ tidak dipakai</text>
+
+  <!-- ================= KARTU ESP32 ================= -->
+  <rect x="434" y="135" width="336" height="560" rx="20" fill="#e2e8f0"/>
+  <rect x="432" y="130" width="336" height="560" rx="20" fill="#0f172a" stroke="#243044" stroke-width="1.5"/>
+  <rect x="444" y="142" width="312" height="536" rx="14" fill="none" stroke="#1e293b"/>
+
+  <g fill="#1e293b">
+    <circle cx="456" cy="154" r="4"/>
+    <circle cx="744" cy="154" r="4"/>
+    <circle cx="456" cy="666" r="4"/>
+    <circle cx="744" cy="666" r="4"/>
+  </g>
+
+  <text x="600" y="186" font-size="19" font-weight="700" fill="#f8fafc" text-anchor="middle">ESP32 DevKit V1</text>
+  <text x="600" y="208" font-size="11.5" fill="#94a3b8" text-anchor="middle">logika 3,3 V · WiFi 2,4 GHz</text>
+
+  <rect x="500" y="226" width="200" height="86" rx="10" fill="#172033" stroke="#2b3a50"/>
+  <text x="600" y="262" font-size="11.5" fill="#93a4bc" text-anchor="middle">ESP-WROOM-32</text>
+  <g fill="#334155">
+    <rect x="522" y="276" width="46" height="4" rx="2"/>
+    <rect x="574" y="276" width="26" height="4" rx="2"/>
+    <rect x="606" y="276" width="66" height="4" rx="2"/>
+  </g>
+
+  <text x="600" y="622" font-size="10.5" fill="#7f8ea3" text-anchor="middle">BOOT = GPIO0 · LED = GPIO2</text>
+  <rect x="574" y="650" width="52" height="26" rx="6" fill="#263247" stroke="#3a4a63"/>
+  <text x="600" y="667" font-size="9" fill="#a9b8cc" text-anchor="middle">USB</text>
+
+  <!-- pin kiri -->
+  <g font-size="13" fill="#e2e8f0">
+    <text x="444" y="274">GPIO5</text>
+    <text x="444" y="314">GPIO18</text>
+    <text x="444" y="354">GPIO23</text>
+    <text x="444" y="394">GPIO19</text>
+    <text x="444" y="434">GPIO4</text>
+    <text x="444" y="484" fill="#fca5a5">3V3</text>
+    <text x="444" y="524" fill="#cbd5e1">GND</text>
+  </g>
+  <g fill="#1c2738" stroke="#4a5d7a">
+    <rect x="414" y="263" width="18" height="14" rx="4"/>
+    <rect x="414" y="303" width="18" height="14" rx="4"/>
+    <rect x="414" y="343" width="18" height="14" rx="4"/>
+    <rect x="414" y="383" width="18" height="14" rx="4"/>
+    <rect x="414" y="423" width="18" height="14" rx="4"/>
+    <rect x="414" y="473" width="18" height="14" rx="4"/>
+    <rect x="414" y="513" width="18" height="14" rx="4"/>
+  </g>
+
+  <!-- pin kanan -->
+  <g font-size="13" fill="#e2e8f0" text-anchor="end">
+    <text x="756" y="274">GPIO21</text>
+    <text x="756" y="314">GPIO22</text>
+    <text x="756" y="354" fill="#fdba74">VIN 5V</text>
+    <text x="756" y="394" fill="#cbd5e1">GND</text>
+    <text x="756" y="444">GPIO27</text>
+    <text x="756" y="494">GPIO0</text>
+    <text x="756" y="544">GPIO2</text>
+  </g>
+  <g fill="#1c2738" stroke="#4a5d7a">
+    <rect x="768" y="263" width="18" height="14" rx="4"/>
+    <rect x="768" y="303" width="18" height="14" rx="4"/>
+    <rect x="768" y="343" width="18" height="14" rx="4"/>
+    <rect x="768" y="383" width="18" height="14" rx="4"/>
+    <rect x="768" y="433" width="18" height="14" rx="4"/>
+    <rect x="768" y="483" width="18" height="14" rx="4"/>
+    <rect x="768" y="533" width="18" height="14" rx="4"/>
+  </g>
+
+  <!-- ================= KARTU LCD ================= -->
+  <rect x="854" y="155" width="300" height="330" rx="16" fill="#e8edf4"/>
+  <rect x="852" y="150" width="300" height="330" rx="16" fill="#ffffff" stroke="#dbe4ee" stroke-width="1.5"/>
+  <rect x="868" y="150" width="268" height="5" rx="2.5" fill="#16a34a"/>
+
+  <text x="876" y="191" font-size="19" font-weight="700" fill="#0f172a">LCD 20x4 (I2C)</text>
+  <text x="876" y="213" font-size="12" fill="#64748b">PCF8574 · alamat 0x27 atau 0x3F</text>
+
+  <g font-size="13" fill="#334155">
+    <text x="868" y="274">SDA</text>
+    <text x="868" y="314">SCL</text>
+    <text x="868" y="354">VCC</text>
+    <text x="868" y="394">GND</text>
+  </g>
+  <rect x="836" y="263" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="836" y="303" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="836" y="343" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="836" y="383" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+
+  <rect x="942" y="246" width="188" height="106" rx="8" fill="#123f2f" stroke="#1c5a44"/>
+  <rect x="948" y="252" width="176" height="94" rx="5" fill="none" stroke="#2b7a5b" opacity="0.6"/>
+  <g font-family="Consolas, Menlo, monospace" font-size="10.5" fill="#9ff0c4">
+    <text x="956" y="274">SMK TELESANDI</text>
+    <text x="956" y="292">Gerbang RPL 1</text>
+    <text x="956" y="310">MSK 05:40  PLG 15:00</text>
+    <text x="956" y="328">TAP KARTU   07:10</text>
+  </g>
+
+  <text x="876" y="452" font-size="10.5" fill="#94a3b8">SDA/SCL idealnya lewat level shifter I2C</text>
+
+  <!-- ================= KARTU BUZZER ================= -->
+  <rect x="854" y="515" width="300" height="160" rx="16" fill="#e8edf4"/>
+  <rect x="852" y="510" width="300" height="160" rx="16" fill="#ffffff" stroke="#dbe4ee" stroke-width="1.5"/>
+  <rect x="868" y="510" width="268" height="5" rx="2.5" fill="#f59e0b"/>
+
+  <text x="876" y="549" font-size="17" font-weight="700" fill="#0f172a">Buzzer aktif</text>
+  <text x="876" y="569" font-size="11.5" fill="#64748b">umpan balik suara</text>
+
+  <text x="868" y="610" font-size="15" font-weight="700" fill="#334155">−</text>
+  <text x="868" y="650" font-size="15" font-weight="700" fill="#334155">+</text>
+  <rect x="836" y="598" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+  <rect x="836" y="638" width="16" height="14" rx="4" fill="#f1f5f9" stroke="#b6c2d1"/>
+
+  <circle cx="1046" cy="600" r="25" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <path d="M1038 590 L1053 581 L1053 619 L1038 610 Z" fill="#f59e0b" opacity="0.85"/>
+  <g stroke="#f59e0b" fill="none" stroke-width="2" opacity="0.7">
+    <path d="M1060 590 a14 14 0 0 1 0 20"/>
+    <path d="M1066 584 a22 22 0 0 1 0 32"/>
+  </g>
+  <text x="1046" y="652" font-size="10.5" fill="#94a3b8" text-anchor="middle">3,3–5 V</text>
+
+  <!-- ================= KARTU CATU DAYA ================= -->
+  <rect x="854" y="695" width="300" height="130" rx="16" fill="#e8edf4"/>
+  <rect x="852" y="690" width="300" height="130" rx="16" fill="#f8fafc" stroke="#dbe4ee" stroke-width="1.5"/>
+  <text x="876" y="722" font-size="13.5" font-weight="700" fill="#0f172a">Catu daya</text>
+  <g font-size="11.5" fill="#475569">
+    <text x="876" y="746">• Adaptor 5 V ≥ 2 A ke VIN + GND.</text>
+    <text x="876" y="766">• Jangan beri 5 V ke VIN saat USB terpasang.</text>
+    <text x="876" y="786">• MFRC522 tetap dari pin 3V3 board.</text>
+    <text x="876" y="806">• Ground semua modul disatukan.</text>
+  </g>
+
+  <!-- ================= CALLOUT ================= -->
+  <rect x="54" y="585" width="300" height="190" rx="16" fill="#d9c79a" opacity="0.25"/>
+  <rect x="52" y="580" width="300" height="190" rx="16" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+  <polygon points="78,597 92,621 64,621" fill="#f59e0b"/>
+  <text x="78" y="618" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">!</text>
+  <text x="102" y="614" font-size="14" font-weight="700" fill="#b45309">Perhatian</text>
+  <g font-size="11.5" fill="#92400e">
+    <text x="76" y="648">• MFRC522 hanya 3,3 V, jangan 5 V.</text>
+    <text x="76" y="668">• LCD 20x4 diberi 5 V (VIN).</text>
+    <text x="76" y="688">• SDA/SCL LCD sebaiknya lewat level</text>
+    <text x="88" y="706">shifter I2C 4 kanal.</text>
+    <text x="76" y="726">• Semua GND harus disatukan.</text>
+    <text x="76" y="746">• Kabel SPI usahakan &lt; 20 cm.</text>
+  </g>
+
+  <!-- ================= FOOTER ================= -->
+  <text x="48" y="852" font-size="11" fill="#94a3b8">Pin dapat diubah di firmware/PresentechAlat/config.example.h · detail ada di firmware/WIRING.md</text>
+</svg>
