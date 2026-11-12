@@ -73,3 +73,58 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  firmware:
+    name: Firmware (ESP32)
+    runs-on: ubuntu-latest
+    env:
+      ARDUINO_CORE: esp32:esp32@3.3.8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install arduino-cli
+        run: |
+          curl -fsSL https://github.com/arduino/arduino-cli/releases/download/v1.6.0/arduino-cli_1.6.0_Linux_64bit.tar.gz -o /tmp/arduino-cli.tar.gz
+          sudo tar -xzf /tmp/arduino-cli.tar.gz -C /usr/local/bin arduino-cli
+          arduino-cli version
+
+      - name: Cache core ESP32 & libraries
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.arduino15
+            ~/Arduino/libraries
+          key: arduino-${{ env.ARDUINO_CORE }}-libs-1
+          restore-keys: arduino-${{ env.ARDUINO_CORE }}-
+
+      - name: Configure board manager
+        run: |
+          arduino-cli config init --overwrite
+          arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core update-index
+
+      - name: Install core ESP32
+        run: arduino-cli core install "${ARDUINO_CORE}"
+
+      - name: Install libraries
+        run: |
+          arduino-cli lib install "MFRC522@1.4.12"
+          arduino-cli lib install "ArduinoJson@7.4.3"
+          arduino-cli lib install "LiquidCrystal I2C@1.1.2"
+
+      # config.h berisi kredensial asli dan tidak ada di repo; untuk kompilasi
+      # cukup memakai nilai placeholder dari config.example.h.
+      - name: Prepare config.h
+        run: cp firmware/PresentechAlat/config.example.h firmware/PresentechAlat/config.h
+
+      - name: Compile firmware
+        working-directory: firmware/PresentechAlat
+        run: |
+          arduino-cli compile \
+            --fqbn esp32:esp32:esp32 \
+            --board-options PartitionScheme=min_spiffs \
+            --warnings default \
+            --output-dir build \
+            .
+          ls -lh build/*.bin

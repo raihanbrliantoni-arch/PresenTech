@@ -1,5 +1,7 @@
 # PresenTech — Sistem Absensi RFID & IoT Sekolah
 
+[![CI](https://github.com/raihanbrliantoni-arch/PresenTech/actions/workflows/ci.yml/badge.svg)](https://github.com/raihanbrliantoni-arch/PresenTech/actions/workflows/ci.yml)
+
 Aplikasi absensi sekolah berbasis **RFID + ESP32** dengan web dashboard untuk **Admin, Guru, dan Siswa**. Perangkat membaca kartu RFID, mengirim UID ke API Laravel, lalu web menampilkan kehadiran, laporan, dan status perangkat secara real-time.
 
 > Repo ini berisi **web (backend Laravel + frontend React)** dan **firmware alat ESP32**
@@ -270,6 +272,9 @@ di setiap push ke `main` serta pull request:
 
 - **Backend** — `composer install`, `php artisan test`, dan `vendor/bin/pint --test`.
 - **Frontend** — `npm ci`, `npm run lint`, dan `npm run build`.
+- **Firmware** — `arduino-cli compile` untuk `firmware/PresentechAlat` dengan core
+  ESP32 3.3.8 dan partition `min_spiffs` (skema ber-OTA), memakai
+  `config.example.h` sebagai `config.h` sementara.
 
 Test backend memakai SQLite in-memory (lihat `PresenTech-Backend/phpunit.xml`), jadi CI
 tidak memerlukan MySQL.
