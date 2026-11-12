@@ -244,7 +244,8 @@ Frontend React 19 dan Vite menyediakan:
 
 ### 4.3 Firmware
 
-Firmware baru berada di:
+Firmware baru berada di (versi yang dipakai repo ini: `firmware/PresentechAlat/`,
+lihat `firmware/README.md` dan `firmware/WIRING.md`):
 
 ```text
 D:\Coding\Arduino\PresenTech_alat\

@@ -5,6 +5,7 @@
 .env.*
 !.env.example
 *.local
+firmware/PresentechAlat/config.h
 
 # =====================================================================
 # DEPENDENCY & HASIL BUILD

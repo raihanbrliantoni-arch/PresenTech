@@ -2,7 +2,8 @@
 
 Aplikasi absensi sekolah berbasis **RFID + ESP32** dengan web dashboard untuk **Admin, Guru, dan Siswa**. Perangkat membaca kartu RFID, mengirim UID ke API Laravel, lalu web menampilkan kehadiran, laporan, dan status perangkat secara real-time.
 
-> Repo ini berisi **web (backend Laravel + frontend React)**. Firmware ESP32 disimpan terpisah di komputer pengembang.
+> Repo ini berisi **web (backend Laravel + frontend React)** dan **firmware alat ESP32**
+> di folder [`firmware/`](firmware/). Panduan merakit: [`firmware/WIRING.md`](firmware/WIRING.md).
 >
 > **Starter bersih:** database sengaja dikosongkan. Seeder hanya membuat **satu akun Admin**;
 > data kelas, guru, siswa, kartu RFID, jadwal, dan perangkat dibuat dari dashboard Admin.
@@ -51,7 +52,7 @@ Kartu RFID → MFRC522 → ESP32 (WiFi)
 
 - Backend: Laravel 13, Sanctum, PHPUnit.
 - Frontend: React 19 + Vite, disajikan Laravel dari `public/app`.
-- Perangkat: ESP32 + MFRC522 + LCD I2C 20x4 + buzzer (firmware Arduino).
+- Perangkat: ESP32 + MFRC522 + LCD I2C 20x4 + buzzer (firmware Arduino, lihat [`firmware/`](firmware/)).
 
 ---
 
@@ -61,12 +62,37 @@ Kartu RFID → MFRC522 → ESP32 (WiFi)
 .
 ├─ PresenTech-Backend/     # Laravel API + host SPA (/app)
 ├─ PresenTech-frontend/    # React + Vite
+├─ firmware/               # kode alat ESP32 + skema wiring
+│  ├─ PresentechAlat/      # firmware Arduino (.ino + config.example.h)
+│  ├─ README.md            # cara konfigurasi, upload, OTA
+│  └─ WIRING.md            # tabel pin + catatan daya
 ├─ docs/                   # laporan proyek (md/html/pdf)
 ├─ scripts/
 │  └─ build-frontend.ps1   # build React lalu salin ke public/app
 ├─ start-presentech.bat    # jalankan API + discovery + scheduler + tunnel
 └─ README.md
 ```
+
+---
+
+## Alat & firmware (ESP32)
+
+Firmware siap pakai ada di [`firmware/PresentechAlat`](firmware/PresentechAlat).
+Skema pin lengkap dan catatan daya: **[`firmware/WIRING.md`](firmware/WIRING.md)**.
+
+| Komponen | Pin ESP32 |
+|---|---|
+| MFRC522 SDA/SS / RST | GPIO5 / GPIO4 |
+| MFRC522 SCK / MISO / MOSI | GPIO18 / GPIO19 / GPIO23 |
+| MFRC522 VCC | **3.3V** (jangan 5V) |
+| LCD I2C 20x4 SDA / SCL | GPIO21 / GPIO22 |
+| LCD VCC | 5V (VIN) |
+| Buzzer aktif | GPIO27 |
+| Tombol setup | GPIO0 (BOOT) |
+
+Ringkasnya: daftarkan alat di **Perangkat IoT**, salin device key `ptd_...` ke
+`config.h`, upload firmware, lalu alat akan **Online** dan siap menerima tap kartu.
+Langkah lengkap: [`firmware/README.md`](firmware/README.md).
 
 ---
 

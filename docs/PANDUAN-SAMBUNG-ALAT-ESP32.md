@@ -4,6 +4,11 @@ Dokumen ini menjelaskan cara menyambungkan perangkat pembaca kartu RFID berbasis
 ke aplikasi web PresenTech: mulai dari mendaftarkan alat, mengambil device key, mencari
 alamat server, mengirim heartbeat, sampai mencatat absensi saat kartu ditempel.
 
+> **Firmware siap pakai ada di repo ini:** [`firmware/PresentechAlat`](../firmware/PresentechAlat)
+> (konfigurasi, upload, OTA: [`firmware/README.md`](../firmware/README.md); skema pin:
+> [`firmware/WIRING.md`](../firmware/WIRING.md)). Contoh sketch di bagian 13 dokumen ini
+> adalah versi ringkas untuk memahami alur, bukan pengganti firmware tersebut.
+
 Panduan ini mengikuti kontrak API yang benar-benar dipakai backend
 (`routes/api.php`, `EnsureDeviceKey`, `DeviceController`, `AttendanceController`),
 bukan asumsi. Contoh nilai di bawah memakai kondisi lab saat ini:
