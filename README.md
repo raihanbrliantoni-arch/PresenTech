@@ -66,7 +66,7 @@ Kartu RFID → MFRC522 → ESP32 (WiFi)
 ├─ PresenTech-frontend/    # React + Vite
 ├─ firmware/               # kode alat ESP32 + skema wiring
 │  ├─ PresentechAlat/      # firmware Arduino (.ino + config.example.h)
-│  ├─ wiring/              # diagram wiring (SVG sumber + PNG + .fzz Fritzing)
+│  ├─ wiring/              # gambar wiring: breadboard (gaya Fritzing) + skematik, SVG & PNG
 │  ├─ README.md            # cara konfigurasi, upload, OTA
 │  └─ WIRING.md            # tabel pin + catatan daya
 ├─ docs/                   # laporan proyek + panduan tambahan (Markdown)
@@ -84,11 +84,14 @@ Firmware siap pakai ada di [`firmware/PresentechAlat`](firmware/PresentechAlat).
 Skema pin lengkap dan catatan daya: **[`firmware/WIRING.md`](firmware/WIRING.md)**.
 
 <p align="center">
-  <a href="firmware/wiring/presentech-wiring.svg">
-    <img src="firmware/wiring/presentech-wiring.png" width="820"
-         alt="Diagram wiring PresenTech: ESP32, MFRC522, LCD I2C 20x4, dan buzzer">
+  <a href="firmware/wiring/presentech-wiring-breadboard.svg">
+    <img src="firmware/wiring/presentech-wiring-breadboard.png" width="860"
+         alt="Tampak breadboard gaya Fritzing: ESP32 DevKit V1, MFRC522, LCD 20x4 I2C, buzzer">
   </a>
 </p>
+
+Ada dua gambar di [`firmware/wiring/`](firmware/wiring): **tampak breadboard (gaya Fritzing)**
+dan **diagram skematik** berwarna.
 
 | Komponen | Pin ESP32 |
 |---|---|
