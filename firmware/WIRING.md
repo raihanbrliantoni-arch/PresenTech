@@ -24,34 +24,35 @@ nilai bawaan `firmware/PresentechAlat/config.example.h`. Kalau kamu mengubah pin
 
 ## 2. Diagram sambungan
 
-```html
 <p align="center">
   <a href="wiring/presentech-wiring.svg">
     <img src="wiring/presentech-wiring.png" width="960"
          alt="Diagram wiring PresenTech: ESP32, MFRC522, LCD I2C 20x4, dan buzzer">
   </a>
 </p>
-```
 
 Warna kabel pada gambar **hanya saran** agar mudah ditelusuri; yang wajib cocok adalah
 **label GPIO** dan **tegangannya** (MFRC522 3,3 V, LCD 5 V). Titik hitam menandakan
 sambungan GND yang menyatu. Klik gambar untuk membuka versi SVG (bisa di-zoom tanpa pecah).
 
-### Tampak breadboard (gaya Fritzing)
+### Tampak breadboard (Fritzing)
 
-Pandangan kedua: bentuk fisik modul dan jalur kabel, mirip tampilan **breadboard view**
-di Fritzing — cocok untuk pegangan saat merakit.
+Pandangan kedua: bentuk fisik modul dan jalur kabel, **digambar langsung di Fritzing**
+(breadboard view). Ini hasil export dari sketsa aslinya, jadi bisa dibuka dan diedit.
 
-```html
 <p align="center">
-  <a href="wiring/presentech-wiring-breadboard.svg">
-    <img src="wiring/presentech-wiring-breadboard.png" width="980"
-         alt="Tampak breadboard gaya Fritzing: ESP32 DevKit V1, MFRC522, LCD 20x4 I2C, buzzer">
+  <a href="wiring/fritzing/presentech-wiring.fzz">
+    <img src="wiring/fritzing/presentech-breadboard.png" width="980"
+         alt="Tampak breadboard Fritzing: ESP32 DevKit V1, MFRC522, LCD 20x4 I2C, buzzer">
   </a>
 </p>
-```
 
-Kabel pada gambar dibuat **menumpuk di atas modul** seperti aslinya, jadi ada jalur yang
+Klik gambar untuk mengunduh sketsa `.fzz`-nya (klik di GitHub → **Download**).
+Sketsa itu **self-contained** — part ESP32, MFRC522, LCD 20x4, dan buzzer sudah ikut
+di dalam file, cukup dibuka dengan **File → Open…** di Fritzing 0.9.3b ke atas.
+Penjelasan lengkap: [`wiring/fritzing/README.md`](wiring/fritzing/README.md).
+
+Kabel pada gambar **menumpuk di atas modul** seperti aslinya, jadi ada jalur yang
 melintasi board. Yang perlu ditiru hanya **titik masuk dan keluar** tiap kabel.
 
 ### Tampak pin ESP32 (board 30 pin)
@@ -226,22 +227,32 @@ dan tabel di dokumen ini sekaligus.
 
 ## 8. Mengubah diagram
 
-Ada dua sumber gambar di folder [`wiring/`](wiring/):
+Ada dua sumber gambar di folder `wiring/`:
 
-| SVG | Isi | Ukuran PNG |
+| File | Isi | Cara mengubah |
 |---|---|---|
-| `presentech-wiring-breadboard.svg` | tampak breadboard (gaya Fritzing) | 2800×1800 |
-| `presentech-wiring.svg` | diagram skematik berwarna | 2400×1760 |
+| `fritzing/presentech-wiring.fzz` | tampak breadboard Fritzing (+ `presentech-breadboard.png`) | edit di Fritzing |
+| `presentech-wiring.svg` | diagram skematik berwarna (+ `presentech-wiring.png`) | edit SVG-nya |
 
-Setelah mengedit SVG, render ulang PNG-nya agar preview di GitHub ikut berubah:
+### Tampak breadboard (Fritzing)
+
+Sketsa `.fzz`-nya asli, jadi yang diubah adalah sketsanya — bukan gambar hasil export:
+
+1. Buka `presentech-wiring.fzz` di Fritzing (**File → Open…**).
+2. Geser part, klik kabel lalu **Delete**, atau tarik kabel baru antar pin.
+3. Simpan (`Ctrl+S`), lalu **File → Export → as Image…** dan timpa
+   `presentech-breadboard.png`.
+
+Part kustomnya (ESP32, MFRC522, LCD 20x4, buzzer) ada di `fritzing/parts/*.fzpz`
+kalau ingin dipakai di sketsa lain: **Part → Import…**.
+
+### Diagram skematik (SVG)
+
+Setelah mengedit `presentech-wiring.svg`, render ulang PNG-nya agar preview di GitHub
+ikut berubah:
 
 ```powershell
 # dari folder firmware/wiring
-& "C:\Program Files\Google\Chrome\Application\chrome.exe" `
-  --headless=new --disable-gpu --hide-scrollbars `
-  --force-device-scale-factor=2 --window-size=1400,900 `
-  --screenshot=presentech-wiring-breadboard.png presentech-wiring-breadboard.svg
-
 & "C:\Program Files\Google\Chrome\Application\chrome.exe" `
   --headless=new --disable-gpu --hide-scrollbars `
   --force-device-scale-factor=2 --window-size=1200,880 `
@@ -249,15 +260,3 @@ Setelah mengedit SVG, render ulang PNG-nya agar preview di GitHub ikut berubah:
 ```
 
 PNG dibuat 2x supaya tetap tajam di layar Retina/HP.
-
-### Soal file `.fzz` Fritzing
-
-Fritzing **tidak** punya part ESP32, MFRC522, maupun LCD 20x4 I2C di library resminya
-(`fritzing-parts`), dan aplikasi Fritzing 1.0.8 berbayar. Karena itu repo ini memakai
-gambar SVG/PNG di atas, bukan sketsa `.fzz`. Kalau tetap ingin menggambar di Fritzing,
-part yang perlu diunduh dulu:
-
-- **ESP32 DevKit V1** — part komunitas (forum Fritzing / SparkFun ESP32 Thing).
-- **RFID RC522** — part komunitas "RFID-RC522".
-- **LCD 20x4 I2C** — part komunitas "LCD 20x4 with I2C backpack".
-- **Buzzer** — sudah ada di library inti (`Buzzer`).
