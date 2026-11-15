@@ -66,9 +66,10 @@ Kartu RFID → MFRC522 → ESP32 (WiFi)
 ├─ PresenTech-frontend/    # React + Vite
 ├─ firmware/               # kode alat ESP32 + skema wiring
 │  ├─ PresentechAlat/      # firmware Arduino (.ino + config.example.h)
+│  ├─ wiring/              # diagram wiring (SVG sumber + PNG + .fzz Fritzing)
 │  ├─ README.md            # cara konfigurasi, upload, OTA
 │  └─ WIRING.md            # tabel pin + catatan daya
-├─ docs/                   # laporan proyek (md/html/pdf)
+├─ docs/                   # laporan proyek + panduan tambahan (Markdown)
 ├─ scripts/
 │  └─ build-frontend.ps1   # build React lalu salin ke public/app
 ├─ start-presentech.bat    # jalankan API + discovery + scheduler + tunnel
