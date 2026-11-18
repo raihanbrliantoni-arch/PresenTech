@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   pull_request:
 
 permissions:
@@ -128,3 +129,47 @@ jobs:
             --output-dir build \
             .
           ls -lh build/*.bin
+
+      # Hasil kompilasi bisa diunduh langsung dari tab Actions tanpa perlu
+      # Arduino IDE. Nama artifact dipakai juga oleh job release di bawah.
+      - name: Upload firmware binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: presenTech-firmware
+          path: firmware/PresentechAlat/build/*.bin
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: Release firmware
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: firmware
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download firmware binary
+        uses: actions/download-artifact@v4
+        with:
+          name: presenTech-firmware
+          path: dist
+
+      - name: Rename binaries & checksum
+        run: |
+          mkdir -p release
+          for f in dist/*.bin; do
+            cp "$f" "release/$(basename "${f%.bin}")-${GITHUB_REF_NAME}.bin"
+          done
+          cd release
+          sha256sum *.bin > SHA256SUMS.txt
+          ls -lh
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/*.bin
+            release/SHA256SUMS.txt
+          generate_release_notes: true
+          draft: false
+          prerelease: false

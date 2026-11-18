@@ -287,7 +287,24 @@ di setiap push ke `main` serta pull request:
 - **Frontend** — `npm ci`, `npm run lint`, dan `npm run build`.
 - **Firmware** — `arduino-cli compile` untuk `firmware/PresentechAlat` dengan core
   ESP32 3.3.8 dan partition `min_spiffs` (skema ber-OTA), memakai
-  `config.example.h` sebagai `config.h` sementara.
+  `config.example.h` sebagai `config.h` sementara. Hasil kompilasi diunggah sebagai
+  artifact **`presenTech-firmware`** (tab **Actions → pilih run → Artifacts**), jadi
+  file `.bin` bisa diunduh tanpa memasang Arduino IDE.
 
 Test backend memakai SQLite in-memory (lihat `PresenTech-Backend/phpunit.xml`), jadi CI
 tidak memerlukan MySQL.
+
+### Rilis firmware otomatis
+
+Push tag berawalan `v` untuk membuat GitHub Release berisi file `.bin` + `SHA256SUMS.txt`:
+
+```powershell
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Nomor tag sebaiknya sama dengan `FIRMWARE_VERSION` di `config.h`/`config.example.h`.
+File `.bin` dari release bisa langsung diunggah ke menu **Firmware** di dashboard (OTA)
+atau di-flash lewat USB. Build rilis memakai `config.example.h`, jadi kredensial WiFi /
+device key di dalamnya adalah placeholder — alat yang sudah pernah dikonfigurasi tetap
+memakai NVS-nya, sedangkan alat baru membuka portal setup.

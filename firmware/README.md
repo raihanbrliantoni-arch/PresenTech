@@ -97,6 +97,24 @@ Sketch uses 1.166.872 bytes (59%) of program storage space. Maximum is 1.960.080
 Global variables use 52.968 bytes (16%) of dynamic memory, leaving 274.712 bytes.
 ```
 
+### Tanpa Arduino IDE (artifact CI)
+
+Setiap push ke `main` mengompilasi firmware di GitHub Actions dan menyimpan hasilnya:
+
+1. Buka tab **Actions** → pilih run **CI** terbaru yang hijau.
+2. Unduh artifact **`presenTech-firmware`** (berisi `.bin`).
+3. Flash lewat USB memakai `esptool.py`, atau unggah `.bin` itu ke dashboard
+   **Firmware** untuk OTA.
+
+> Build CI memakai `config.example.h` (WiFi, server, dan device key placeholder).
+> Alat baru akan membuka portal **PresenTech-Setup** — isi WiFi + URL server di sana,
+> lalu kirim `key ptd_...` lewat Serial Monitor. Alat yang NVS-nya sudah terisi
+> (mis. saat OTA) tetap memakai konfigurasi lamanya.
+
+Untuk versi rilis, push tag `v1.0.0` (mis. `git tag v1.0.0; git push origin v1.0.0`)
+— GitHub Release otomatis berisi `.bin` dan `SHA256SUMS.txt`. Naikkan
+`FIRMWARE_VERSION` lebih dulu agar OTA mengenali versi baru.
+
 ---
 
 ## 5. Pertama kali menyala
